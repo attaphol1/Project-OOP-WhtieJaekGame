@@ -23,7 +23,7 @@ public class StartMenu extends JFrame{
         menuFrame(); 
     }
 
-    public void nameGame(){
+    void nameGame(){
         nametopic = new JLabel();
         nametopic.setText("WhiteJack");
         nametopic.setHorizontalAlignment(JLabel.CENTER);
@@ -31,7 +31,7 @@ public class StartMenu extends JFrame{
         nametopic.setFont(new Font("MV Boli",Font.PLAIN,100));
     }
 
-    public void btnClick(){
+    void btnClick(){
               
         startClick = new JLabel();
         startClick.setIcon(iconStart);
@@ -137,17 +137,16 @@ public class StartMenu extends JFrame{
         });
     }
 
-    public void importIcon(){
+    void importIcon(){
         iconStart = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Images.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
         iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Pic.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
         iconStop = new ImageIcon(new ImageIcon("image/5397d2da22b328d.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
         iconStop_Click = new ImageIcon(new ImageIcon("image/QuitButtom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
     }
 
-    public void menuFrame(){
+    void menuFrame(){
         JFrame frame = new JFrame("White Jack");
-        frame.getContentPane().setBackground(Color.BLUE);
-        frame.setBackground(Color.red);
+        // frame.getContentPane().setBackground(Color.BLUE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // this.setLayout(null);
         frame.setSize(1000, 800);
@@ -155,7 +154,6 @@ public class StartMenu extends JFrame{
         frame.add(stopClick);
         frame.add(startClick);
         frame.add(nametopic);
-        // frame.setBackground(Color.RED);
         frame.setVisible(true);
     }
 
