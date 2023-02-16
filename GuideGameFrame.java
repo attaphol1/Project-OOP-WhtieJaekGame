@@ -1,10 +1,14 @@
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GuideGameFrame {
     private JFrame frame;
 
-    private JTextField text;
+    private JPanel panel;
+
+    private JLabel text;
 
     public GuideGameFrame(){
         initVariable();
@@ -13,13 +17,15 @@ public class GuideGameFrame {
 
     public void initVariable(){
         frame = new JFrame("Guide Game");
-        text = new JTextField();
+        text = new JLabel();
+        panel = new JPanel();
 
     }
 
     public void initFrame(){
-        text.setText("Hello Game");
-        frame.add(text);
+        text.setText("Guide Game");
+        panel.add(text);
+        frame.add(panel);
         frame.setSize(500, 500);
         frame.setResizable(false);
         frame.setVisible(true);
