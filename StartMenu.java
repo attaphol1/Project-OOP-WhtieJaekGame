@@ -44,6 +44,7 @@ public class StartMenu extends JFrame{
             public void mousePressed(MouseEvent e) {
                 startClick.setIcon(iconStart_Click);
                 
+                
             }
 
             @Override
