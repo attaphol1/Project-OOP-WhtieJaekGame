@@ -17,6 +17,7 @@ public class StartMenu extends JFrame{
     ImageIcon iconStart;
     ImageIcon iconStop_Click;
     ImageIcon iconStop;
+    ImageIcon hiImg;
     JLabel nametopic;
 
     StartMenu(){
@@ -151,11 +152,14 @@ public class StartMenu extends JFrame{
         iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Pic.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
         iconStop = new ImageIcon(new ImageIcon("image/5397d2da22b328d.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
         iconStop_Click = new ImageIcon(new ImageIcon("image/QuitButtom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+
+        hiImg = new ImageIcon(new ImageIcon("image/Hi_Img.jpg").getImage().getScaledInstance(1000, 800, DO_NOTHING_ON_CLOSE));
     }
 
     void menuFrame(){
         JFrame frame = new JFrame("White Jack");
-        // frame.getContentPane().setBackground(Color.BLUE);
+        JLabel background = new JLabel(hiImg);
+        background.setBounds(0, 100, 1000, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // this.setLayout(null);
         frame.setSize(1000, 800);
@@ -164,6 +168,7 @@ public class StartMenu extends JFrame{
         frame.add(startClick);
         frame.add(nametopic);
         frame.setVisible(true);
+        frame.getContentPane().add(background);
     }
 
 }
