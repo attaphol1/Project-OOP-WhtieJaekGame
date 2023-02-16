@@ -17,11 +17,22 @@ public class StartMenu extends JFrame{
     JLabel nametopic;
 
     StartMenu(){
-        iconStart = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Images.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Pic.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStop = new ImageIcon(new ImageIcon("image/5397d2da22b328d.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStop_Click = new ImageIcon(new ImageIcon("image/QuitButtom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        
+        importIcon();
+        btnClick();
+        nameGame();
+        menuFrame(); 
+    }
+
+    public void nameGame(){
+        nametopic = new JLabel();
+        nametopic.setText("WhiteJack");
+        nametopic.setHorizontalAlignment(JLabel.CENTER);
+        nametopic.setVerticalAlignment(JLabel.TOP);
+        nametopic.setFont(new Font("MV Boli",Font.PLAIN,100));
+    }
+
+    public void btnClick(){
+              
         startClick = new JLabel();
         startClick.setIcon(iconStart);
         startClick.setBounds(295, 300, 400, 100);
@@ -124,13 +135,16 @@ public class StartMenu extends JFrame{
             }
             
         });
+    }
 
-        nametopic = new JLabel();
-        nametopic.setText("WhiteJack");
-        nametopic.setHorizontalAlignment(JLabel.CENTER);
-        nametopic.setVerticalAlignment(JLabel.TOP);
-        nametopic.setFont(new Font("MV Boli",Font.PLAIN,100));
+    public void importIcon(){
+        iconStart = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Images.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Pic.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStop = new ImageIcon(new ImageIcon("image/5397d2da22b328d.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStop_Click = new ImageIcon(new ImageIcon("image/QuitButtom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+    }
 
+    public void menuFrame(){
         JFrame frame = new JFrame("White Jack");
         frame.setBackground(Color.red);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,8 +154,8 @@ public class StartMenu extends JFrame{
         frame.add(stopClick);
         frame.add(startClick);
         frame.add(nametopic);
+        // frame.setBackground(Color.RED);
         frame.setVisible(true);
-        
     }
 
 }
