@@ -44,7 +44,6 @@ public class StartMenu extends JFrame{
             public void mousePressed(MouseEvent e) {
                 startClick.setIcon(iconStart_Click);
                 
-                
             }
 
             @Override
@@ -132,11 +131,11 @@ public class StartMenu extends JFrame{
         nametopic.setVerticalAlignment(JLabel.TOP);
         nametopic.setFont(new Font("MV Boli",Font.PLAIN,100));
 
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("White Jack");
         frame.setBackground(Color.red);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // this.setLayout(null);
-        frame.setSize(1000, 1000);
+        frame.setSize(1000, 800);
         frame.setResizable(false);
         frame.add(stopClick);
         frame.add(startClick);

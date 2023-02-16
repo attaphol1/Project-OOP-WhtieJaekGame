@@ -1,14 +1,14 @@
 import javax.swing.JFrame;
 
 public class Game {
-    private JFrame gameFrame; 
     
     public Game(){
-
+        new StartMenu();
+        new GuideGameFrame();
     }
 
     public void initVariable(){
-        
+
     }
 
 
