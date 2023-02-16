@@ -36,12 +36,12 @@ public class StartMenu extends JFrame{
         startClick = new JLabel();
         startClick.setIcon(iconStart);
         startClick.setBounds(295, 300, 400, 100);
-        startClick.setOpaque(true);
+        // startClick.setOpaque(true);
 
         stopClick = new JLabel();
         stopClick.setIcon(iconStop);
         stopClick.setBounds(295, 500, 400, 100);
-        stopClick.setOpaque(true);
+        // stopClick.setOpaque(true);
 
         startClick.addMouseListener(new MouseInputListener() {
 
@@ -146,6 +146,7 @@ public class StartMenu extends JFrame{
 
     public void menuFrame(){
         JFrame frame = new JFrame("White Jack");
+        frame.getContentPane().setBackground(Color.BLUE);
         frame.setBackground(Color.red);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // this.setLayout(null);
