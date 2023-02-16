@@ -1,4 +1,7 @@
 import java.awt.event.MouseEvent;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,8 +50,7 @@ public class StartMenu extends JFrame{
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Start Game");
-                
+                System.out.println("Start Game");              
             }
 
             @Override
@@ -59,7 +61,14 @@ public class StartMenu extends JFrame{
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                startClick.setIcon(iconStart);
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        startClick.setIcon(iconStart);
+                    }    
+                },200);
+                
                 
             }
 
