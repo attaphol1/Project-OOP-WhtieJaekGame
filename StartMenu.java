@@ -148,10 +148,10 @@ public class StartMenu extends JFrame{
     }
 
     void importIcon(){
-        iconStart = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Images.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Vector-PNG-Pic.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStop = new ImageIcon(new ImageIcon("image/5397d2da22b328d.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
-        iconStop_Click = new ImageIcon(new ImageIcon("image/QuitButtom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStart = new ImageIcon(new ImageIcon("image/Start-Button.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStart_Click = new ImageIcon(new ImageIcon("image/Start-Button-Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStop = new ImageIcon(new ImageIcon("image/Quit-Button.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
+        iconStop_Click = new ImageIcon(new ImageIcon("image/Quit-Buttom_Click.png").getImage().getScaledInstance(400, 100, DO_NOTHING_ON_CLOSE));
 
         hiImg = new ImageIcon(new ImageIcon("image/Hi_Img.jpg").getImage().getScaledInstance(1000, 800, DO_NOTHING_ON_CLOSE));
     }
