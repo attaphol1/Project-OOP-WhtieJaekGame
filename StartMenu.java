@@ -20,6 +20,8 @@ public class StartMenu extends JFrame{
     ImageIcon hiImg;
     JLabel nametopic;
 
+    JFrame frame;
+
     StartMenu(){
         importIcon();
         btnClick();
@@ -59,7 +61,7 @@ public class StartMenu extends JFrame{
                 startClick.setIcon(iconStart_Click);
                 
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 Timer timer = new Timer();
@@ -67,9 +69,10 @@ public class StartMenu extends JFrame{
                     @Override
                     public void run() {
                         startClick.setIcon(iconStart);
+                        frame.setVisible(false);
+                        new DemoGUI();
                     }    
                 },200);
-                
                 
             }
 
@@ -157,7 +160,7 @@ public class StartMenu extends JFrame{
     }
 
     void menuFrame(){
-        JFrame frame = new JFrame("White Jack");
+        frame = new JFrame("White Jack");
         JLabel background = new JLabel(hiImg);
         background.setBounds(0, 100, 1000, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,6 +171,7 @@ public class StartMenu extends JFrame{
         frame.add(startClick);
         frame.add(nametopic);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
         frame.getContentPane().add(background);
     }
 

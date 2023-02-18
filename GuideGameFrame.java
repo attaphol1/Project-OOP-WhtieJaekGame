@@ -47,5 +47,6 @@ public class GuideGameFrame {
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setTitle("Rule");
+        frame.setLocationRelativeTo(null);
     }
 }
