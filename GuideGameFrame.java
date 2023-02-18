@@ -32,7 +32,7 @@ public class GuideGameFrame {
                                         "your own preferred strategies and techniques. Remember, while the game is simple to learn, mastering it\n"+
                                         "requires time and practice.");
         welcome.setBounds(20, 0, 860, 200);
-        welcome.setFont(new Font("Courier",Font.BOLD, 14));
+        welcome.setFont(new Font("Courier",Font.BOLD, 13));
         rule.setBounds(40, 200, 820, 300);
         rule.setBackground(null);
         rule.setFont(new Font("Courier", Font.PLAIN, 16));
@@ -46,5 +46,6 @@ public class GuideGameFrame {
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setTitle("Rule");
     }
 }
