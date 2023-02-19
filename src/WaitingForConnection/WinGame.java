@@ -1,3 +1,4 @@
+package src.WaitingForConnection;
 import javax.swing.*;
 import java.awt.*;
 

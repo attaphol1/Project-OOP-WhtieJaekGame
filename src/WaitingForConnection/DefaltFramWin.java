@@ -1,3 +1,4 @@
+package src.WaitingForConnection;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
