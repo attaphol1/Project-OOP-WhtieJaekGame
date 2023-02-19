@@ -1,9 +1,14 @@
+package src.GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+
+import src.model.Card;
+import src.model.Deck;
+import src.model.Player;
 
 public class DemoGUI{
 

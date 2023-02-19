@@ -1,3 +1,4 @@
+package src.GUI;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -6,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
+
 import java.awt.*;
 
 
@@ -22,7 +24,7 @@ public class StartMenu extends JFrame{
 
     JFrame frame;
 
-    StartMenu(){
+    public StartMenu(){
         importIcon();
         btnClick();
         nameGame();

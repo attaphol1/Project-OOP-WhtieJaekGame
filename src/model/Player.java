@@ -1,9 +1,10 @@
+package src.model;
 import java.util.ArrayList;
 
 public class Player {
     private ArrayList<Card> listCard;
 
-    Player(){
+    public Player(){
         listCard = new ArrayList<>();
     }
 
