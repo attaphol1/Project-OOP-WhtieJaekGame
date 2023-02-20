@@ -39,8 +39,14 @@ public class WinGame extends JPanel {
         // Body player two //
     }
 
-    public void setNumPoints(int numPoints) {
+    public void setPointsPlayerOne(int numPoints) {
         this.numPointsPlayerOne = numPoints;
+        System.out.println(numPointsPlayerOne);
+        repaint();
+    }
+
+    public void setPointsPlayerTwo(int numPoints) {
+        this.numPointsPlayerTwo = numPoints;
         repaint();
     }
 }
