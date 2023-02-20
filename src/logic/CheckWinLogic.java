@@ -17,16 +17,19 @@ public class CheckWinLogic {
         if(p1.getSumScore() > victory) {
             p2.setWinCollect();
             df.playerTwoWin(p2.getWinCollect());
+            df.statusPlayerTwoWin();
             check = true;
         }
         else if(p2.getSumScore() > victory){
             p1.setWinCollect();
             df.playerOneWin(p1.getWinCollect());
+            df.statusPlayerOneWin();
             check = true;
         }
         else if(p2.getSumScore() > p1.getSumScore()){
             p2.setWinCollect();
             df.playerTwoWin(p2.getWinCollect());
+            df.statusPlayerTwoWin();
             check = true;
         }
     }
