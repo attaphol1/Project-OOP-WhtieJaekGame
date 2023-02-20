@@ -12,6 +12,7 @@ import src.model.Card;
 import src.model.Deck;
 import src.model.Player;
 import src.WaitingForConnection.DefaltFramWin;
+import src.logic.CheckWinLogic;
 
 public class DemoGUI{
 
@@ -36,7 +37,7 @@ public class DemoGUI{
     private Deck deck;
     private Player player1;
     private Player player2;
-
+    private CheckWinLogic cwLogic;
     
     DemoGUI(){
         initVariable();
@@ -59,6 +60,7 @@ public class DemoGUI{
         deck = new Deck();
         player1 = new Player();
         player2 = new Player();
+        cwLogic = new CheckWinLogic();
     }
 
     void initLayer(){
@@ -97,27 +99,46 @@ public class DemoGUI{
                 // TODO Auto-generated method stub
                 if(swap){
                     Card c = deck.getCardRand(player1,player2);
+
                     player2.setListCard(c);
                     player2.setSumScore(c.getRank());
-                    c.getLabel().setLocation(xPosCard, yPosCard);
-                    yPosCard += 50;
-                    System.out.println(c.getRank()+" "+c.getType());
-                    layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-                    frame.repaint();
 
-                    setNum2(c.getRank());
+                    c.getLabel().setLocation(xPosCard, yPosCard);
+
+                    yPosCard += 50;
+
+                    System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
+                    layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+
+                    cwLogic.checkWin(player1, player2);
+                    if(cwLogic.isCheck()){
+                        cwLogic.setCheck(false);
+                        reset();
+                    }
+                    // frame.repaint();
                 }
                 else{
                     Card c = deck.getCardRand(player1,player2);
+
                     player1.setListCard(c);
                     player1.setSumScore(c.getRank());
+                    
                     c.getLabel().setLocation(xPosCard, yPosCard);
                     yPosCard += 50;
-                    System.out.println(c.getRank()+" "+c.getType());
-                    layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-                    frame.repaint();
                     
-                    setNum1(c.getRank());
+                    System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
+                    
+                    layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+                    
+                    cwLogic.checkWin(player1, player2);
+                    
+                    if(cwLogic.isCheck()){
+                        cwLogic.setCheck(false);
+                        reset();
+                    }
+
+                    // frame.repaint();
+                    
                 }
             }
         });
@@ -139,24 +160,8 @@ public class DemoGUI{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                df.resetWinGame();
-                lose1 = 0;
-                lose2 = 0;
                 // TODO Auto-generated method stub
-                reset();
-                swap = false;
-                xPosLy = 10;
-                yPosLy = 10;
-                yPosCard = 0;
-                cntZOrder = 0;
-                layer1.removeAll();
-                layer2.removeAll();
-                btnSurrender.setLocation(450, 450);
-                frame.add(btnStand);
-                frame.repaint();
-
-                player1.clearCard();
-                player2.clearCard();        
+                reset();        
             }
             
         });
@@ -164,11 +169,8 @@ public class DemoGUI{
     }
     
     //------------------- Play zone -------------------------//
-    private int lose1 = 0;
+    // private int lose1 = 0;
     public void reset(){
-        sumPlayer1 = 0;
-        sumPlayer2 = 0;
-
         swap = false;
         xPosLy = 10;
         yPosLy = 10;
@@ -180,82 +182,84 @@ public class DemoGUI{
         frame.add(btnStand);
         
         player1.clearCard();
-        player2.clearCard();   
+        player1.resetSumScore();
+        player2.clearCard();        
+        player2.resetSumScore();   
         
         frame.repaint();
     }
     
-    private int sumPlayer1 = 0;
-    private int lose2 = 0;
-    private int sumPlayer2 = 0;
-    private Timer timer1 = new Timer();
+//     private int sumPlayer1 = 0;
+//     private int lose2 = 0;
+//     private int sumPlayer2 = 0;
+//     private Timer timer1 = new Timer();
 
-    private DefaltFramWin df = new DefaltFramWin();
+//     private DefaltFramWin df = new DefaltFramWin();
 
-    public void setNum1(int num){       
-        sumPlayer1 += num;
+//     public void setNum1(int num){       
+//         sumPlayer1 += num;
 
-        if(sumPlayer1 > 21){
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    df.statusPlayerTwoWin();
-                    lose1++;
-                    df.playerTwoWin(lose1);
-                    reset();
-                }    
-            },1000);
+//         if(sumPlayer1 > 21){
+//             timer1.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+//                     df.statusPlayerTwoWin();
+//                     lose1++;
+//                     df.playerTwoWin(lose1);
+//                     reset();
+//                 }    
+//             },1000);
             
-        }else if(sumPlayer1 == 21){
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    df.statusPlayerTwoWin();
-                    lose2++;
-                    df.playerOneWin(lose2);
-                    reset();
-                }    
-            },1000);
+//         }else if(sumPlayer1 == 21){
+//             timer1.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+//                     df.statusPlayerTwoWin();
+//                     lose2++;
+//                     df.playerOneWin(lose2);
+//                     reset();
+//                 }    
+//             },1000);
             
-        }
-    }
+//         }
+//     }
 
-    public void setNum2(int num){
-        sumPlayer2 += num;
+//     public void setNum2(int num){
+//         sumPlayer2 += num;
 
-        if(sumPlayer2 > 21){
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    df.statusPlayerOneWin();
-                    lose2++;
-                    df.playerTwoWin(lose2);
-                    reset();
-                }    
-            },1000);     
-        }else if(sumPlayer2 > sumPlayer1 && sumPlayer2 < 21){
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    df.statusPlayerOneWin();
-                    lose1++;
-                    df.playerOneWin(lose1);
-                    reset();
-                }    
-            },1000);      
-        }else if(sumPlayer2 == 21){
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    df.statusPlayerOneWin();
-                    lose1++;
-                    df.playerOneWin(lose1);
-                    reset();
-                }    
-            },1000);      
-        }   
-    }
-    //------------------- Play zone -------------------------//
+//         if(sumPlayer2 > 21){
+//             timer1.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+//                     df.statusPlayerOneWin();
+//                     lose2++;
+//                     df.playerTwoWin(lose2);
+//                     reset();
+//                 }    
+//             },1000);     
+//         }else if(sumPlayer2 > sumPlayer1 && sumPlayer2 < 21){
+//             timer1.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+//                     df.statusPlayerOneWin();
+//                     lose1++;
+//                     df.playerOneWin(lose1);
+//                     reset();
+//                 }    
+//             },1000);      
+//         }else if(sumPlayer2 == 21){
+//             timer1.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+//                     df.statusPlayerOneWin();
+//                     lose1++;
+//                     df.playerOneWin(lose1);
+//                     reset();
+//                 }    
+//             },1000);      
+//         }   
+//     }
+//     //------------------- Play zone -------------------------//
 
     
 }
