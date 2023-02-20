@@ -14,7 +14,17 @@ public class CheckWinLogic {
     }
 
     public void checkWin(Player p1, Player p2){
-        if(p1.getSumScore() > victory) {
+        if(p1.getSumScore() == victory){
+            p1.setWinCollect();
+            df.playerOneWin(p1.getWinCollect());
+            df.statusPlayerOneWin();
+        }
+        else if(p2.getSumScore() == victory){
+            p2.setWinCollect();
+            df.playerTwoWin(p2.getWinCollect());
+            df.statusPlayerTwoWin();
+        }
+        else if(p1.getSumScore() > victory) {
             p2.setWinCollect();
             df.playerTwoWin(p2.getWinCollect());
             df.statusPlayerTwoWin();

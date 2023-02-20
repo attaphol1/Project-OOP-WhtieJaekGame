@@ -111,6 +111,13 @@ public class DemoGUI{
                     layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
 
                     cwLogic.checkWin(player1, player2);
+
+                    if(player2.getSumScore() == player1.getSumScore()){
+                        btnSurrender.setLocation(450, 450);
+                        frame.add(btnStand);
+                        frame.repaint();
+                    }
+
                     if(cwLogic.isCheck()){
                         cwLogic.setCheck(false);
                         reset();
