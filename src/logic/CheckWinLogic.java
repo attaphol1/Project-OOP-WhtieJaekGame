@@ -21,13 +21,13 @@ public class CheckWinLogic {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    check = true;
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
                     df.statusPlayerOneWin();
-
+                    
                 }    
             },1000);
+            check = true;
 
 
         }
@@ -35,49 +35,49 @@ public class CheckWinLogic {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    check = true;
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
                     df.statusPlayerTwoWin();
                     
                 }    
             },1000);
+            check = true;
         }
         else if(p1.getSumScore() > victory) {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    check = true;
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
                     df.statusPlayerTwoWin();
                     
                 }    
             },1000);
+            check = true;
         }
         else if(p2.getSumScore() > victory){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    check = true;
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
                     df.statusPlayerOneWin();
                     
                 }    
             },1000);
+            check = true;
         }
         else if(p2.getSumScore() > p1.getSumScore()){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    check = true;
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
                     df.statusPlayerTwoWin();
                     
                 }    
             },1000);
+            check = true;
         }
     }
 

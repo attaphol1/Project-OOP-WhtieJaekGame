@@ -129,8 +129,16 @@ public class DemoGUI{
                     }
 
                     if(cwLogic.isCheck()){
+                        enableFalse();
+                        Timer timer1 = new Timer();
+                        timer1.schedule(new TimerTask() {
+                        @Override
+                            public void run() {
+                            enableTrue();
+                            reset();
+                            }    
+                        },2000);
                         cwLogic.setCheck(false);
-                        reset();
                     }
                 }
                 else{
@@ -149,8 +157,17 @@ public class DemoGUI{
                     cwLogic.checkWin(player1, player2);
                     
                     if(cwLogic.isCheck()){
+                        enableFalse();
+                        Timer timer1 = new Timer();
+                        timer1.schedule(new TimerTask() {
+                        @Override
+                            public void run() {
+                            enableTrue();
+                            reset();
+                            }    
+                        },2000);
+
                         cwLogic.setCheck(false);
-                        reset();
                     }
 
                     // frame.repaint();
