@@ -53,7 +53,7 @@ public class CheckWinLogic {
                     
                 }    
             },1000);
-            check = true;
+            check = true;     
         }
         else if(p2.getSumScore() > victory){
             timer.schedule(new TimerTask() {
