@@ -94,18 +94,20 @@ public class DemoGUI{
                 if(swap){
                     Card c = deck.getCardRand(player1,player2);
                     player2.setListCard(c);
+                    player2.setSumScore(c.getRank());
                     c.getLabel().setLocation(xPosCard, yPosCard);
                     yPosCard += 50;
-                    System.out.println(c.getRank());
+                    System.out.println(c.getRank()+" "+c.getType());
                     layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
                     frame.repaint();
                 }
                 else{
                     Card c = deck.getCardRand(player1,player2);
                     player1.setListCard(c);
+                    player1.setSumScore(c.getRank());
                     c.getLabel().setLocation(xPosCard, yPosCard);
                     yPosCard += 50;
-                    System.out.println(c.getRank());
+                    System.out.println(c.getRank()+" "+c.getType());
                     layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
                     frame.repaint();
                 }
@@ -123,6 +125,28 @@ public class DemoGUI{
                 frame.remove(btnStand);
                 btnSurrender.setLocation(450, 400);
             }
+        });
+
+        btnSurrender.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                swap = false;
+                xPosLy = 10;
+                yPosLy = 10;
+                yPosCard = 0;
+                cntZOrder = 0;
+                layer1.removeAll();
+                layer2.removeAll();
+                btnSurrender.setLocation(450, 450);
+                frame.add(btnStand);
+                frame.repaint();
+
+                player1.clearCard();
+                player2.clearCard();
+            }
+            
         });
     }
 }

@@ -8,10 +8,4 @@ public class Game {
         new StartMenu();
         new GuideGameFrame();
     }
-
-    public void initVariable(){
-
-    }
-
-
 }

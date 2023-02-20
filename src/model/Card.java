@@ -9,12 +9,14 @@ public class Card {
     private int height;
     
     private int rank;
+    private String type;
     private String path = "asset/card/";
 
     private JLabel label;
 
     Card(int rank, String type){
         this.rank = (rank >= 10)? 10:rank;
+        this.type = type;
         path = path+type+"/"+rank+type.toLowerCase().charAt(0)+".png";
 
         width = 138;
@@ -56,6 +58,10 @@ public class Card {
 
     public JLabel getLabel() {
         return label;
+    }
+
+    public String getType(){
+        return type;
     }
 
 }
