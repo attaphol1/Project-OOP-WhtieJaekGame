@@ -1,4 +1,5 @@
 package src.GUI;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
@@ -6,6 +7,7 @@ import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import src.model.Card;
@@ -39,8 +41,10 @@ public class DemoGUI{
     private Player player1;
     private Player player2;
     private CheckWinLogic cwLogic;
+
+    private JLabel drawText;
     
-    DemoGUI(){
+    public DemoGUI(){
         initVariable();
         initLayer();
         initButton();
@@ -56,12 +60,16 @@ public class DemoGUI{
 
         btnHit = new JButton("Hit");
         btnStand = new JButton("Stand");
-        btnSurrender = new JButton("Surrender");
+        btnSurrender = new JButton("Reset");
 
         deck = new Deck();
         player1 = new Player();
         player2 = new Player();
         cwLogic = new CheckWinLogic();
+
+        drawText = new JLabel("Draw");
+        drawText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
+        drawText.setBounds(350, 50, 500, 300);
     }
 
     void initLayer(){
@@ -124,7 +132,6 @@ public class DemoGUI{
                         cwLogic.setCheck(false);
                         reset();
                     }
-                    // frame.repaint();
                 }
                 else{
                     Card c = deck.getCardRand(player1,player2);
@@ -171,11 +178,6 @@ public class DemoGUI{
                     btnSurrender.setLocation(450, 400);
                 }
             }
-
-            private void draw() {
-                System.out.println("draw");
-            }
-
         });
 
         btnSurrender.addActionListener(new ActionListener(){
@@ -188,6 +190,35 @@ public class DemoGUI{
             
         });
         
+    }
+    Timer timer1;
+    private void draw() {
+        System.out.println("draw");
+        frame.add(drawText);
+        frame.repaint();
+        enableFalse();
+        Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    frame.remove(drawText);
+                    frame.repaint();
+                    enableTrue();
+                }    
+            },2000);
+        reset();
+    }
+
+    public void enableFalse(){
+        btnHit.setEnabled(false);
+        btnStand.setEnabled(false);
+        btnSurrender.setEnabled(false);
+    }
+
+    public void enableTrue(){
+        btnHit.setEnabled(true);
+        btnStand.setEnabled(true);
+        btnSurrender.setEnabled(true);
     }
     
     //------------------- Play zone -------------------------//
