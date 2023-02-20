@@ -2,17 +2,20 @@ package src.WaitingForConnection;
 import javax.swing.*;
 import java.awt.*;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class WinGame extends JPanel {
     private int numPointsPlayerOne = 0;
     private int numPointsPlayerTwo = 0;
-
+    Graphics2D g2;
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+        g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
 
-        // Body player one //
+        //----Body player one----//
         g2.drawLine(50, 100, 50, 700);
         g2.drawLine(50, 100, 250, 100);
         g2.drawLine(250, 100, 250, 200);
@@ -23,9 +26,9 @@ public class WinGame extends JPanel {
         if(numPointsPlayerOne > 3){ g2.drawLine(250, 350, 350, 400); }
         if(numPointsPlayerOne > 4){ g2.drawLine(250, 500, 150, 550); }
         if(numPointsPlayerOne > 5){ g2.drawLine(250, 500, 350, 550); } 
-        // Body player one //
+        //----Body player one----//
 
-        // Body player two //
+        //----Body player two----//
         g2.drawLine(950, 100, 950, 700);
         g2.drawLine(950, 100, 750, 100);
         g2.drawLine(750, 100, 750, 200);
@@ -36,17 +39,37 @@ public class WinGame extends JPanel {
         if(numPointsPlayerTwo > 3){ g2.drawLine(750, 350, 850, 400); }
         if(numPointsPlayerTwo > 4){ g2.drawLine(750, 500, 650, 550); }
         if(numPointsPlayerTwo > 5){ g2.drawLine(750, 500, 850, 550); } 
-        // Body player two //
+        //----Body player two----//
     }
 
     public void setPointsPlayerOne(int numPoints) {
-        this.numPointsPlayerOne = numPoints;
-        System.out.println(numPointsPlayerOne);
-        repaint();
+
+        Timer timer1 = new Timer();
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                numPointsPlayerOne = numPoints;
+                repaint();
+            }    
+        },2000);
     }
 
     public void setPointsPlayerTwo(int numPoints) {
-        this.numPointsPlayerTwo = numPoints;
+
+        Timer timer1 = new Timer();
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                numPointsPlayerTwo = numPoints;
+                repaint();
+            }    
+        },2000);
+    }
+
+    
+    public void resetFrame(){
+        numPointsPlayerOne = 0;
+        numPointsPlayerTwo = 0;
         repaint();
     }
 }

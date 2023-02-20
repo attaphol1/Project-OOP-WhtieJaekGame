@@ -1,23 +1,53 @@
 package src.WaitingForConnection;
+
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JFrame;
 
 public class DefaltFramWin {
-    WinGame panel;
+    private WinGame panel;
+    JFrame frame;
     public DefaltFramWin(){
-        JFrame frame = new JFrame("Win");
+        frame = new JFrame("Win");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new WinGame();
         frame.add(panel);
         frame.setSize(1000, 800);
-        frame.setResizable(false);
+        frame.setVisible(false);
+        
+        
+    }
+
+    public void playerOneWin(int points) {   
         frame.setVisible(true);
-    }
-
-    void playerOneWin(int points) {
         panel.setPointsPlayerTwo(points);
+
+        Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    frame.setVisible(false);
+                }    
+            },4000);
     }
 
-    void playerTwoWin(int points) {
+    public void playerTwoWin(int points) {
+        frame.setVisible(true);
         panel.setPointsPlayerOne(points);
+
+        Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    frame.setVisible(false);
+                }    
+            },4000);
     }
+
+    public void resetWinGame(){
+        panel.resetFrame();
+    }
+
 }

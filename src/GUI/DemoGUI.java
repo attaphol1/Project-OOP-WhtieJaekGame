@@ -9,6 +9,8 @@ import javax.swing.JLayeredPane;
 import src.model.Card;
 import src.model.Deck;
 import src.model.Player;
+import src.WaitingForConnection.DefaltFramWin;
+import src.WaitingForConnection.WinGame;
 
 public class DemoGUI{
 
@@ -33,6 +35,7 @@ public class DemoGUI{
     private Deck deck;
     private Player player1;
     private Player player2;
+
     
     DemoGUI(){
         initVariable();
@@ -100,6 +103,8 @@ public class DemoGUI{
                     System.out.println(c.getRank()+" "+c.getType());
                     layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
                     frame.repaint();
+
+                    setNum2(c.getRank());
                 }
                 else{
                     Card c = deck.getCardRand(player1,player2);
@@ -110,6 +115,8 @@ public class DemoGUI{
                     System.out.println(c.getRank()+" "+c.getType());
                     layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
                     frame.repaint();
+                    
+                    setNum1(c.getRank());
                 }
             }
         });
@@ -131,7 +138,11 @@ public class DemoGUI{
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                df.resetWinGame();
+                lose1 = 0;
+                lose2 = 0;
                 // TODO Auto-generated method stub
+                reset();
                 swap = false;
                 xPosLy = 10;
                 yPosLy = 10;
@@ -144,9 +155,74 @@ public class DemoGUI{
                 frame.repaint();
 
                 player1.clearCard();
-                player2.clearCard();
+                player2.clearCard();        
             }
             
         });
+        
     }
+    
+    //------------------- Play zone -------------------------//
+    private int lose1 = 0;
+    public void reset(){
+        sumPlayer1 = 0;
+        sumPlayer2 = 0;
+
+        swap = false;
+        xPosLy = 10;
+        yPosLy = 10;
+        yPosCard = 0;
+        cntZOrder = 0;
+        layer1.removeAll();
+        layer2.removeAll();
+        btnSurrender.setLocation(450, 450);
+        frame.add(btnStand);
+        
+        player1.clearCard();
+        player2.clearCard();   
+        
+        frame.repaint();
+    }
+    
+    private int sumPlayer1 = 0;
+    private int lose2 = 0;
+    private int sumPlayer2 = 0;
+
+    private DefaltFramWin df = new DefaltFramWin();
+
+    public void setNum1(int num){       
+        sumPlayer1 += num;
+
+        if(sumPlayer1 > 21){
+            lose1++;
+            df.playerTwoWin(lose1);
+            reset();
+        }else if(sumPlayer1 == 21){
+            lose2++;
+            df.playerOneWin(lose2);
+            reset();
+        }
+    }
+
+    public void setNum2(int num){
+        sumPlayer2 += num;
+
+        if(sumPlayer2 > 21){
+            lose2++;
+            df.playerTwoWin(lose2);
+            reset();
+        }else if(sumPlayer2 > sumPlayer1 && sumPlayer2 < 21){
+            lose1++;
+            df.playerOneWin(lose1);
+            reset();
+        }
+        else if(sumPlayer2 == 21){
+            lose1++;
+            df.playerOneWin(lose1);
+            reset();
+        }
+    }
+    //------------------- Play zone -------------------------//
+
+    
 }
