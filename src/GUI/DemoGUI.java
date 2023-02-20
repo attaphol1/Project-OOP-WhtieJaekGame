@@ -173,9 +173,9 @@ public class DemoGUI{
             }
 
             private void draw() {
-
+                System.out.println("draw");
             }
-            
+
         });
 
         btnSurrender.addActionListener(new ActionListener(){
