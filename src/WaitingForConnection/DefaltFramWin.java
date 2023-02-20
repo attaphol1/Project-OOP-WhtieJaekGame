@@ -1,23 +1,28 @@
 package src.WaitingForConnection;
 
-import java.util.Set;
+import java.awt.Font;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class DefaltFramWin {
+    private JLabel winText;
     private WinGame panel;
     JFrame frame;
     public DefaltFramWin(){
-        frame = new JFrame("Win");
+        frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new WinGame();
+        winText = new JLabel("Player 1 WIN!!!");
+        winText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,50));
+        winText.setBounds(280, 150, 500, 500);
+        frame.add(winText);
         frame.add(panel);
         frame.setSize(1000, 800);
-        frame.setVisible(false);
-        
-        
+        frame.setVisible(false);  
+        frame.setResizable(false);
     }
 
     public void playerOneWin(int points) {   
@@ -44,6 +49,14 @@ public class DefaltFramWin {
                     frame.setVisible(false);
                 }    
             },4000);
+    }
+
+    public void statusPlayerOneWin(){
+        winText.setText("Player 1 WIN!!!");
+    }
+
+    public void statusPlayerTwoWin(){
+        winText.setText("Player 2 WIN!!!");
     }
 
     public void resetWinGame(){
