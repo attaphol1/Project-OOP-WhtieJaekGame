@@ -24,6 +24,7 @@ public class DemoGUI{
     private int cntZOrder = 0;
 
     private boolean swap = false;
+    private boolean standP2 = false;
 
     private JFrame frame;
 
@@ -113,6 +114,7 @@ public class DemoGUI{
                     cwLogic.checkWin(player1, player2);
 
                     if(player2.getSumScore() == player1.getSumScore()){
+                        standP2 = true;
                         btnSurrender.setLocation(450, 450);
                         frame.add(btnStand);
                         frame.repaint();
@@ -154,13 +156,26 @@ public class DemoGUI{
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 // TODO Auto-generated method stub
-                swap = true;
-                yPosCard = 0;
-                cntZOrder = 0;
-                frame.remove(btnStand);
-                btnSurrender.setLocation(450, 400);
+                if(standP2){
+                    draw();
+                    standP2 = false;
+                    reset();
+                }
+                else{
+                    swap = true;
+                    yPosCard = 0;
+                    cntZOrder = 0;
+                    frame.remove(btnStand);
+                    btnSurrender.setLocation(450, 400);
+                }
             }
+
+            private void draw() {
+
+            }
+            
         });
 
         btnSurrender.addActionListener(new ActionListener(){
