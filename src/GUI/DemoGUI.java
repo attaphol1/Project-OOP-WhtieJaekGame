@@ -262,11 +262,31 @@ public class DemoGUI{
         if(lg.getRound() % 2 == 0){
             swap = false;
         }else{ swap = true; }
-        if(player1.getSumScore()==6){
-            reset();
-        }
-        if(player2.getSumScore()==6){
-            reset();
+        
+        if(player1.getWinCollect()==6){
+            Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    lg.resetRound();
+                    cwLogic.reset(player1, player2);        
+                    df.resetWinGame();
+                    reset();
+
+                }    
+            },2000);
+        }else if(player2.getWinCollect()==6){
+            Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    lg.resetRound();
+                    cwLogic.reset(player1, player2);        
+                    df.resetWinGame();
+                    reset();
+
+                }    
+            },2000);
         }
     
         lg.setRound(1);
