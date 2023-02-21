@@ -60,13 +60,11 @@ public class DefaltFramWin {
         winText.setBounds(280, 150, 500, 500);
     }
 
-    public void resetWinGame(int p1,int p2) {   
+    public void resetWinGame() {   
         frame.setVisible(true);
-        panel.setPointsPlayerOne(p1);
-        panel.setPointsPlayerTwo(p2);
+        panel.resetFrame();
         winText.setText("RESET");
         winText.setBounds(410, 150, 500, 500);
-
         Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override

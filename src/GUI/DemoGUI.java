@@ -222,7 +222,7 @@ public class DemoGUI{
                 lg.resetRound();
                 reset();
                 cwLogic.reset(player1, player2);        
-                df.resetWinGame(0,0);
+                df.resetWinGame();
             }
             
         });
