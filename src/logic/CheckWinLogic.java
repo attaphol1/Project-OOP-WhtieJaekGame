@@ -91,6 +91,12 @@ public class CheckWinLogic{
             check = true;
         }
     }
+
+    public void reset(Player p1, Player p2){
+        p1.reset();
+        p2.reset();
+    }
+
     public void setStan(boolean s){
         stan = s;
     }

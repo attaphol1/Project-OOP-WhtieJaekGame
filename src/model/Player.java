@@ -43,4 +43,8 @@ public class Player {
     public void resetSumScore() {
         sumScore = 0;
     }
+
+    public void reset(){
+        winCollect = 0;
+    }
 }

@@ -17,7 +17,6 @@ public class DefaltFramWin {
         panel = new WinGame();
         winText = new JLabel("Player 1 WIN!!!");
         winText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,50));
-        winText.setBounds(280, 150, 500, 500);
         frame.add(winText);
         frame.add(panel);
         frame.setSize(1000, 800);
@@ -53,14 +52,28 @@ public class DefaltFramWin {
 
     public void statusPlayerOneWin(){
         winText.setText("Player 1 WIN!!!");
+        winText.setBounds(280, 150, 500, 500);
     }
 
     public void statusPlayerTwoWin(){
         winText.setText("Player 2 WIN!!!");
+        winText.setBounds(280, 150, 500, 500);
     }
 
-    public void resetWinGame(){
-        panel.resetFrame();
+    public void resetWinGame(int p1,int p2) {   
+        frame.setVisible(true);
+        panel.setPointsPlayerOne(p1);
+        panel.setPointsPlayerTwo(p2);
+        winText.setText("RESET");
+        winText.setBounds(410, 150, 500, 500);
+
+        Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    frame.setVisible(false);
+                }    
+            },1000);
     }
 
 }

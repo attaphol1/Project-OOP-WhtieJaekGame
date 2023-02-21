@@ -16,7 +16,6 @@ import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaltFramWin;
 import src.logic.CheckWinLogic;
-import src.model.LogicGUI;
 
 public class DemoGUI{
     private LogicGUI lg = new LogicGUI();
@@ -46,7 +45,9 @@ public class DemoGUI{
     private CheckWinLogic cwLogic;
 
     private JLabel drawText;
+    private JLabel roundText;
     
+    private DefaltFramWin df = new DefaltFramWin();
     public DemoGUI(){
         initVariable();
         initLayer();
@@ -71,8 +72,7 @@ public class DemoGUI{
         cwLogic = new CheckWinLogic();
 
         drawText = new JLabel("Draw");
-        drawText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
-        drawText.setBounds(350, 50, 500, 300);
+        roundText = new JLabel("ROUND " + lg.getRound());
     }
 
     void initLayer(){
@@ -80,9 +80,16 @@ public class DemoGUI{
         yPosLy = 10;
         layer1.setBounds(xPosLy, yPosLy, 200, 800);
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
+
+        drawText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
+        drawText.setBounds(350, 50, 500, 300);
+
+        roundText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
+        roundText.setBounds(280, 10, 600, 100);
     }
 
     void initFrame(){
+        frame.add(roundText);
         frame.add(layer1);
         frame.add(layer2);
         frame.add(btnHit);
@@ -178,9 +185,6 @@ public class DemoGUI{
 
                         cwLogic.setCheck(false);
                     }
-
-                    // frame.repaint();
-                    
                 }
             }
         });
@@ -216,7 +220,9 @@ public class DemoGUI{
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 lg.resetRound();
-                reset();        
+                reset();
+                cwLogic.reset(player1, player2);        
+                df.resetWinGame(0,0);
             }
             
         });
@@ -258,12 +264,13 @@ public class DemoGUI{
         if(lg.getRound() % 2 == 0){
             swap = false;
         }else{ swap = true; }
-        
+    
         lg.setRound(1);
         lg.setCheckStanFalse();
         cwLogic.setRound(lg.getRound());
         cwLogic.setStan(lg.getCheckStan());
-        System.out.println("Round in Demo :"+lg.getRound());
+
+        roundText.setText("ROUND " + lg.getRound());
 
         xPosLy = 10;
         yPosLy = 10;
@@ -278,6 +285,7 @@ public class DemoGUI{
         player1.resetSumScore();
         player2.clearCard();        
         player2.resetSumScore();   
+
 
         frame.repaint();
     }

@@ -6,7 +6,8 @@
 //     public static void main(String[] args) {
 //         DefaltFramWin w = new DefaltFramWin();
 //         int n = 1;
-//             w.playerOneWin(n); 
+//             // w.playerOneWin(n); 
+//             w.resetWinGame(n);
 //     }
 // }
 

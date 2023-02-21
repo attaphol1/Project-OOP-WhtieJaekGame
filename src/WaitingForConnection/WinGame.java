@@ -66,10 +66,7 @@ public class WinGame extends JPanel {
         },2000);
     }
 
-    
     public void resetFrame(){
-        numPointsPlayerOne = 0;
-        numPointsPlayerTwo = 0;
         repaint();
     }
 }
