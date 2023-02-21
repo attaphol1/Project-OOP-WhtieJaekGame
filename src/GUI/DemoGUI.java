@@ -264,6 +264,12 @@ public class DemoGUI{
         if(lg.getRound() % 2 == 0){
             swap = false;
         }else{ swap = true; }
+        if(player1.getSumScore()==6){
+            reset();
+        }
+        if(player2.getSumScore()==6){
+            reset();
+        }
     
         lg.setRound(1);
         lg.setCheckStanFalse();
