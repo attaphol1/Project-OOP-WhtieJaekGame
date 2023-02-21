@@ -203,8 +203,6 @@ public class DemoGUI{
                 else{
                     if(lg.getRound() % 2 == 0){
                         swap = false;
-                        lg.setCheckStanTrue();
-                        cwLogic.setStan(lg.getCheckStan());
                     }else{ swap = true;}
                     yPosCard = 0;
                     cntZOrder = 0;
@@ -272,9 +270,7 @@ public class DemoGUI{
         }
     
         lg.setRound(1);
-        lg.setCheckStanFalse();
         cwLogic.setRound(lg.getRound());
-        cwLogic.setStan(lg.getCheckStan());
 
         roundText.setText("ROUND " + lg.getRound());
 

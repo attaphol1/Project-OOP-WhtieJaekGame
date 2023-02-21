@@ -8,7 +8,6 @@ import src.WaitingForConnection.DefaltFramWin;
 import src.model.Player;
 
 public class CheckWinLogic{
-    private boolean stan = false;
     private int round = 1;
     private int victory;
     private boolean check = false;
@@ -79,7 +78,7 @@ public class CheckWinLogic{
             check = true;
         }
 
-        else if(stan == true && p1.getSumScore() > p2.getSumScore()){
+        else if(p1.getSumScore() > p2.getSumScore()){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -95,10 +94,6 @@ public class CheckWinLogic{
     public void reset(Player p1, Player p2){
         p1.reset();
         p2.reset();
-    }
-
-    public void setStan(boolean s){
-        stan = s;
     }
     
     public void setRound(int r){
