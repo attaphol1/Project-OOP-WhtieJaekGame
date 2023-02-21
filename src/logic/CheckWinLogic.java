@@ -1,3 +1,4 @@
+
 package src.logic;
 
 import java.util.Timer;
@@ -6,9 +7,12 @@ import java.util.TimerTask;
 import src.WaitingForConnection.DefaltFramWin;
 import src.model.Player;
 
-public class CheckWinLogic {
+public class CheckWinLogic{
+    private boolean stan = false;
+    private int round = 1;
     private int victory;
     private boolean check = false;
+
     private DefaltFramWin df;
     private Timer timer = new Timer();
     public CheckWinLogic(){
@@ -17,6 +21,7 @@ public class CheckWinLogic {
     }
 
     public void checkWin(Player p1, Player p2){
+        System.out.println(round);
         if(p1.getSumScore() == victory){
             timer.schedule(new TimerTask() {
                 @Override
@@ -24,7 +29,6 @@ public class CheckWinLogic {
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
                     df.statusPlayerOneWin();
-                    
                 }    
             },1000);
             check = true;
@@ -37,9 +41,7 @@ public class CheckWinLogic {
                 public void run() {
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
-                    df.statusPlayerTwoWin();
-                    
-                }    
+                    df.statusPlayerTwoWin();            }    
             },1000);
             check = true;
         }
@@ -50,10 +52,9 @@ public class CheckWinLogic {
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
                     df.statusPlayerTwoWin();
-                    
                 }    
             },1000);
-            check = true;     
+            check = true;
         }
         else if(p2.getSumScore() > victory){
             timer.schedule(new TimerTask() {
@@ -62,23 +63,40 @@ public class CheckWinLogic {
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
                     df.statusPlayerOneWin();
-                    
                 }    
             },1000);
             check = true;
         }
-        else if(p2.getSumScore() > p1.getSumScore()){
+        else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore()){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
                     df.statusPlayerTwoWin();
-                    
                 }    
             },1000);
             check = true;
         }
+
+        else if(stan == true && p1.getSumScore() > p2.getSumScore()){
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    p1.setWinCollect();
+                    df.playerOneWin(p1.getWinCollect());
+                    df.statusPlayerOneWin();
+                }    
+            },1000);
+            check = true;
+        }
+    }
+    public void setStan(boolean s){
+        stan = s;
+    }
+    
+    public void setRound(int r){
+        round = r;
     }
 
     public int getVictory() {

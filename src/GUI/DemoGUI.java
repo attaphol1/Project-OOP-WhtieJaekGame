@@ -12,11 +12,14 @@ import javax.swing.JLayeredPane;
 
 import src.model.Card;
 import src.model.Deck;
+import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaltFramWin;
 import src.logic.CheckWinLogic;
+import src.model.LogicGUI;
 
 public class DemoGUI{
+    private LogicGUI lg = new LogicGUI();
 
     private int xPosLy;
     private int yPosLy;
@@ -102,7 +105,6 @@ public class DemoGUI{
     void initLogic(){
 
         btnHit.addActionListener(new ActionListener(){
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
@@ -155,6 +157,13 @@ public class DemoGUI{
                     layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
                     
                     cwLogic.checkWin(player1, player2);
+
+                    if(player2.getSumScore() == player1.getSumScore() && player1.getSumScore() != 0){
+                        standP2 = true;
+                        btnSurrender.setLocation(450, 450);
+                        frame.add(btnStand);
+                        frame.repaint();
+                    }
                     
                     if(cwLogic.isCheck()){
                         enableFalse();
@@ -188,7 +197,11 @@ public class DemoGUI{
                     reset();
                 }
                 else{
-                    swap = true;
+                    if(lg.getRound() % 2 == 0){
+                        swap = false;
+                        lg.setCheckStanTrue();
+                        cwLogic.setStan(lg.getCheckStan());
+                    }else{ swap = true;}
                     yPosCard = 0;
                     cntZOrder = 0;
                     frame.remove(btnStand);
@@ -202,6 +215,7 @@ public class DemoGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
+                lg.resetRound();
                 reset();        
             }
             
@@ -241,7 +255,16 @@ public class DemoGUI{
     //------------------- Play zone -------------------------//
     // private int lose1 = 0;
     public void reset(){
-        swap = false;
+        if(lg.getRound() % 2 == 0){
+            swap = false;
+        }else{ swap = true; }
+        
+        lg.setRound(1);
+        lg.setCheckStanFalse();
+        cwLogic.setRound(lg.getRound());
+        cwLogic.setStan(lg.getCheckStan());
+        System.out.println("Round in Demo :"+lg.getRound());
+
         xPosLy = 10;
         yPosLy = 10;
         yPosCard = 0;
@@ -255,7 +278,7 @@ public class DemoGUI{
         player1.resetSumScore();
         player2.clearCard();        
         player2.resetSumScore();   
-        
+
         frame.repaint();
     }
     
