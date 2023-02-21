@@ -78,7 +78,7 @@ public class CheckWinLogic{
             check = true;
         }
 
-        else if(p1.getSumScore() > p2.getSumScore()){
+        else if(round % 2 == 0 && p1.getSumScore() > p2.getSumScore()){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
