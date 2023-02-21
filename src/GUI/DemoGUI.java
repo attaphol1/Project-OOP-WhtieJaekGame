@@ -217,10 +217,9 @@ public class DemoGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
+                cwLogic.reset(player1, player2);        
                 lg.resetRound();
                 reset();
-                cwLogic.reset(player1, player2);        
-                df.resetWinGame();
             }
             
         });
@@ -239,6 +238,7 @@ public class DemoGUI{
                     frame.remove(drawText);
                     frame.repaint();
                     enableTrue();
+                    reset();
                 }    
             },2000);
         reset();
@@ -270,7 +270,6 @@ public class DemoGUI{
                 public void run() {
                     lg.resetRound();
                     cwLogic.reset(player1, player2);        
-                    df.resetWinGame();
                     reset();
 
                 }    
@@ -282,7 +281,6 @@ public class DemoGUI{
                 public void run() {
                     lg.resetRound();
                     cwLogic.reset(player1, player2);        
-                    df.resetWinGame();
                     reset();
 
                 }    
@@ -308,81 +306,6 @@ public class DemoGUI{
         player2.clearCard();        
         player2.resetSumScore();   
 
-
         frame.repaint();
-    }
-    
-//     private int sumPlayer1 = 0;
-//     private int lose2 = 0;
-//     private int sumPlayer2 = 0;
-//     private Timer timer1 = new Timer();
-
-//     private DefaltFramWin df = new DefaltFramWin();
-
-//     public void setNum1(int num){       
-//         sumPlayer1 += num;
-
-//         if(sumPlayer1 > 21){
-//             timer1.schedule(new TimerTask() {
-//                 @Override
-//                 public void run() {
-//                     df.statusPlayerTwoWin();
-//                     lose1++;
-//                     df.playerTwoWin(lose1);
-//                     reset();
-//                 }    
-//             },1000);
-            
-//         }else if(sumPlayer1 == 21){
-//             timer1.schedule(new TimerTask() {
-//                 @Override
-//                 public void run() {
-//                     df.statusPlayerTwoWin();
-//                     lose2++;
-//                     df.playerOneWin(lose2);
-//                     reset();
-//                 }    
-//             },1000);
-            
-//         }
-//     }
-
-//     public void setNum2(int num){
-//         sumPlayer2 += num;
-
-//         if(sumPlayer2 > 21){
-//             timer1.schedule(new TimerTask() {
-//                 @Override
-//                 public void run() {
-//                     df.statusPlayerOneWin();
-//                     lose2++;
-//                     df.playerTwoWin(lose2);
-//                     reset();
-//                 }    
-//             },1000);     
-//         }else if(sumPlayer2 > sumPlayer1 && sumPlayer2 < 21){
-//             timer1.schedule(new TimerTask() {
-//                 @Override
-//                 public void run() {
-//                     df.statusPlayerOneWin();
-//                     lose1++;
-//                     df.playerOneWin(lose1);
-//                     reset();
-//                 }    
-//             },1000);      
-//         }else if(sumPlayer2 == 21){
-//             timer1.schedule(new TimerTask() {
-//                 @Override
-//                 public void run() {
-//                     df.statusPlayerOneWin();
-//                     lose1++;
-//                     df.playerOneWin(lose1);
-//                     reset();
-//                 }    
-//             },1000);      
-//         }   
-//     }
-//     //------------------- Play zone -------------------------//
-
-    
+    } 
 }

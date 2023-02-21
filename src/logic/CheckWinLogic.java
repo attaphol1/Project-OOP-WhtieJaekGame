@@ -94,6 +94,7 @@ public class CheckWinLogic{
     public void reset(Player p1, Player p2){
         p1.reset();
         p2.reset();
+        df.resetWinGame();
     }
     
     public void setRound(int r){

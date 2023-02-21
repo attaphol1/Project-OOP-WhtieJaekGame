@@ -66,7 +66,13 @@ public class WinGame extends JPanel {
         },2000);
     }
 
-    public void resetFrame(){
-        repaint();
+    public void resetFrame(int numPoints){
+        Timer timer1 = new Timer();
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+            }    
+        },1000);
     }
 }

@@ -36,6 +36,10 @@ public class Player {
         winCollect+=1;
     }
 
+    public void setWinCollect(int o) {
+        winCollect = o;
+    }
+
     public void clearCard(){
         listCard.clear();
     }
