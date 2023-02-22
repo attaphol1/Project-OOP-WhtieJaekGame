@@ -1,5 +1,4 @@
 package src.GUI;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
@@ -137,13 +136,13 @@ public class DemoGUI{
                         frame.repaint();
                     }
 
-                    if(cwLogic.isCheck()){
-                        enableFalse();
+                    if(cwLogic.isSomeOneWin()){
+                        enableBtn();
                         Timer timer1 = new Timer();
                         timer1.schedule(new TimerTask() {
                         @Override
                             public void run() {
-                            enableTrue();
+                            disableBtn();
                             reset();
                             }    
                         },5000);
@@ -172,13 +171,13 @@ public class DemoGUI{
                         frame.repaint();
                     }
                     
-                    if(cwLogic.isCheck()){
-                        enableFalse();
+                    if(cwLogic.isSomeOneWin()){
+                        enableBtn();
                         Timer timer1 = new Timer();
                         timer1.schedule(new TimerTask() {
                         @Override
                             public void run() {
-                            enableTrue();
+                            disableBtn();
                             reset();
                             }    
                         },5000);
@@ -224,31 +223,31 @@ public class DemoGUI{
         });
         
     }
-    Timer timer1;
+    
     private void draw() {
         System.out.println("draw");
         frame.add(drawText);
         frame.repaint();
-        enableFalse();
+        enableBtn();
         Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     frame.remove(drawText);
                     frame.repaint();
-                    enableTrue();
+                    disableBtn();
                     reset();
                 }    
             },5000);
     }
 
-    public void enableFalse(){
+    public void enableBtn(){
         btnHit.setEnabled(false);
         btnStand.setEnabled(false);
         btnSurrender.setEnabled(false);
     }
 
-    public void enableTrue(){
+    public void disableBtn(){
         btnHit.setEnabled(true);
         btnStand.setEnabled(true);
         btnSurrender.setEnabled(true);
@@ -257,9 +256,7 @@ public class DemoGUI{
     //------------------- Play zone -------------------------//
     // private int lose1 = 0;
     public void reset(){
-        if(lg.getRound() % 2 == 0){
-            swap = false;
-        }else{ swap = true; }
+        swap = (lg.getRound() %2 == 0) ? false:true;
         
         if(player1.getWinCollect()==6){
             Timer timer1 = new Timer();

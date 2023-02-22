@@ -78,6 +78,7 @@ public class DefaultFramWin {
                 @Override
                 public void run() {
                     frame.setVisible(false);
+                    winText.setBounds(280, 150, 500, 500);
                 }    
             },3000);
 

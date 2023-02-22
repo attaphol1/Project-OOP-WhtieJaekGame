@@ -109,7 +109,7 @@ public class CheckWinLogic{
         this.victory = victory;
     }
 
-    public boolean isCheck() {
+    public boolean isSomeOneWin() {
         return check;
     }
 
