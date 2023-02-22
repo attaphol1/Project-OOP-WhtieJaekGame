@@ -198,7 +198,6 @@ public class DemoGUI{
                 if(standP2){
                     draw();
                     standP2 = false;
-                    reset();
                 }
                 else{
                     if(lg.getRound() % 2 == 0){
@@ -241,7 +240,6 @@ public class DemoGUI{
                     reset();
                 }    
             },2000);
-        reset();
     }
 
     public void enableFalse(){
