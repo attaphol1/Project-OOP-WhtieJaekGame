@@ -14,7 +14,7 @@ import src.model.Card;
 import src.model.Deck;
 import src.model.LogicGUI;
 import src.model.Player;
-import src.WaitingForConnection.DefaltFramWin;
+import src.WaitingForConnection.DefaultFramWin;
 import src.logic.CheckWinLogic;
 
 public class DemoGUI{
@@ -47,7 +47,7 @@ public class DemoGUI{
     private JLabel drawText;
     private JLabel roundText;
     
-    private DefaltFramWin df = new DefaltFramWin();
+    private DefaultFramWin df = new DefaultFramWin();
     public DemoGUI(){
         initVariable();
         initLayer();
@@ -81,10 +81,10 @@ public class DemoGUI{
         layer1.setBounds(xPosLy, yPosLy, 200, 800);
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
-        DefaltFramWin.customFont(drawText, 100);
+        DefaultFramWin.customFont(drawText, 100);
         drawText.setBounds(350, 50, 500, 300);
 
-        DefaltFramWin.customFont(roundText, 100);
+        DefaultFramWin.customFont(roundText, 100);
         roundText.setBounds(280, 10, 600, 100);
     }
 
@@ -146,7 +146,7 @@ public class DemoGUI{
                             enableTrue();
                             reset();
                             }    
-                        },2000);
+                        },5000);
                         cwLogic.setCheck(false);
                     }
                 }
@@ -181,7 +181,7 @@ public class DemoGUI{
                             enableTrue();
                             reset();
                             }    
-                        },2000);
+                        },5000);
 
                         cwLogic.setCheck(false);
                     }
@@ -239,7 +239,7 @@ public class DemoGUI{
                     enableTrue();
                     reset();
                 }    
-            },2000);
+            },5000);
     }
 
     public void enableFalse(){

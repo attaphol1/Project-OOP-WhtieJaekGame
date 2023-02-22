@@ -10,22 +10,23 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class DefaltFramWin {
+public class DefaultFramWin {
     private JLabel winText;
     private WinGame panel;
     JFrame frame;
-    public DefaltFramWin(){
+    public DefaultFramWin(){
         frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new WinGame();
         winText = new JLabel("Player 1 WIN!!!");
-        DefaltFramWin.customFont(winText,50);
+        DefaultFramWin.customFont(winText,50);
         winText.setBounds(280, 150, 500, 500);
 
         frame.add(winText);
         frame.add(panel);
         frame.setSize(1000, 800);
         frame.setVisible(false);  
+        frame.setLocationRelativeTo(null);
         frame.setResizable(false);
     }
 

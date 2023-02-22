@@ -4,7 +4,7 @@ package src.logic;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import src.WaitingForConnection.DefaltFramWin;
+import src.WaitingForConnection.DefaultFramWin;
 import src.model.Player;
 
 public class CheckWinLogic{
@@ -12,11 +12,11 @@ public class CheckWinLogic{
     private int victory;
     private boolean check = false;
 
-    private DefaltFramWin df;
+    private DefaultFramWin df;
     private Timer timer = new Timer();
     public CheckWinLogic(){
         victory = 21;
-        df = new DefaltFramWin();
+        df = new DefaultFramWin();
     }
 
     public void checkWin(Player p1, Player p2){
