@@ -81,10 +81,10 @@ public class DemoGUI{
         layer1.setBounds(xPosLy, yPosLy, 200, 800);
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
-        drawText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
+        DefaltFramWin.customFont(drawText, 100);
         drawText.setBounds(350, 50, 500, 300);
 
-        roundText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,100));
+        DefaltFramWin.customFont(roundText, 100);
         roundText.setBounds(280, 10, 600, 100);
     }
 

@@ -1,6 +1,9 @@
 package src.WaitingForConnection;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,7 +19,9 @@ public class DefaltFramWin {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new WinGame();
         winText = new JLabel("Player 1 WIN!!!");
-        winText.setFont(new Font("SF Pixelate Shaded",Font.PLAIN,50));
+        DefaltFramWin.customFont(winText,50);
+        winText.setBounds(280, 150, 500, 500);
+
         frame.add(winText);
         frame.add(panel);
         frame.setSize(1000, 800);
@@ -52,12 +57,11 @@ public class DefaltFramWin {
 
     public void statusPlayerOneWin(){
         winText.setText("Player 1 WIN!!!");
-        winText.setBounds(280, 150, 500, 500);
     }
 
     public void statusPlayerTwoWin(){
         winText.setText("Player 2 WIN!!!");
-        winText.setBounds(280, 150, 500, 500);
+        
     }
 
     public void resetWinGame() {  
@@ -76,6 +80,20 @@ public class DefaltFramWin {
                 }    
             },3000);
 
+    }
+
+    public static void customFont(JLabel label, float size){
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("asset/Font/SFPixelateShaded.ttf")).deriveFont(size);
+            font.deriveFont(Font.PLAIN);
+            label.setFont(font);
+        } catch (FontFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
