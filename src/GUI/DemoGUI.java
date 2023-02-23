@@ -48,6 +48,7 @@ public class DemoGUI{
 
     private JLabel drawText;
     private JLabel roundText;
+    private JLabel whiteJackNumber;
     private JLabel bg;
     
     private ImageIcon backgroundGame;
@@ -78,8 +79,8 @@ public class DemoGUI{
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
+        whiteJackNumber = new JLabel("Whitejack " + cwLogic.getVictory());
         
-
         bg = new JLabel(backgroundGame);
         bg.setBounds(0, 0, 1000, 800);
     }
@@ -99,10 +100,15 @@ public class DemoGUI{
 
         DefaultFramWin.customFont(roundText, 100);
         roundText.setBounds(280, 20, 600, 100);
+
+        DefaultFramWin.customFont(whiteJackNumber, 75);
+        whiteJackNumber.setBounds(200, 50, 800, 300);
+        whiteJackNumber.setForeground(new ColorUIResource(255,215,0));
     }
 
     void initFrame(){
         frame.add(roundText);
+        frame.add(whiteJackNumber);
         frame.add(layer1);
         frame.add(layer2);
         frame.add(btnHit);
@@ -147,7 +153,7 @@ public class DemoGUI{
                     if(player2.getSumScore() == player1.getSumScore()){
                         standP2 = true;
                         System.out.println("Stan : "+ standP2);
-                        btnSurrender.setLocation(450, 450);
+                        // btnSurrender.setLocation(450, 450);
                         // frame.add(btnStand);
                         btnStand.setEnabled(true);
                         frame.repaint();
@@ -184,7 +190,7 @@ public class DemoGUI{
                     if(player2.getSumScore() == player1.getSumScore() && player1.getSumScore() != 0){
                         standP2 = true;
                         System.out.println("Stan : "+ standP2);
-                        btnSurrender.setLocation(450, 450);
+                        // btnSurrender.setLocation(450, 450);
                         // frame.add(btnStand);
                         btnStand.setEnabled(true);
                         frame.repaint();
@@ -218,9 +224,7 @@ public class DemoGUI{
                     standP2 = false;
                 }
                 else{
-                    if(lg.getRound() % 2 == 0){
-                        swap = false;
-                    }else{ swap = true;}
+                    swap = (lg.getRound() % 2 == 0)? false:true;
                     yPosCard = 0;
                     cntZOrder = 0;
                     // frame.remove(btnStand);
@@ -276,33 +280,33 @@ public class DemoGUI{
     //------------------- Play zone -------------------------//
     // private int lose1 = 0;
     public void reset(){
-        swap = (lg.getRound() %2 == 0) ? false:true;
         
         if(player1.getWinCollect()==6){
             Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    lg.resetRound();
                     cwLogic.reset(player1, player2); 
-
+                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
                 }    
             },500);
+            lg.resetRound();
         }else if(player2.getWinCollect()==6){
             Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    lg.resetRound();
                     cwLogic.reset(player1, player2); 
-
+                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
                 }    
             },500);
+            lg.resetRound();
         }
+        swap = (lg.getRound() %2 == 0) ? false:true;
     
         lg.setRound(1);
         cwLogic.setRound(lg.getRound());
-
+        System.out.println("round "+lg.getRound());
         roundText.setText("ROUND " + lg.getRound());
 
         xPosLy = 10;
