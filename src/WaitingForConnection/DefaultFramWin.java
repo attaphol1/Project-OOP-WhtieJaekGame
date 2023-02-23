@@ -21,7 +21,6 @@ public class DefaultFramWin {
         panel = new WinGame();
         winText = new JLabel("Player 1 WIN!!!");
         DefaultFramWin.customFont(winText,60);
-        winText.setBounds(240, 150, 600, 500);
         winText.setForeground(Color.PINK);
 
         frame.add(winText);
@@ -60,10 +59,12 @@ public class DefaultFramWin {
 
     public void statusPlayerOneWin(){
         winText.setText("Player 1 WIN!!!");
+        winText.setBounds(240, 20, 600, 500);
     }
 
     public void statusPlayerTwoWin(){
         winText.setText("Player 2 WIN!!!");
+        winText.setBounds(240, 20, 600, 500);
         
     }
 

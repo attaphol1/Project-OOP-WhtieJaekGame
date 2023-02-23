@@ -1,13 +1,16 @@
 package src.GUI;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.plaf.ColorUIResource;
 
 import src.model.Card;
 import src.model.Deck;
@@ -45,8 +48,9 @@ public class DemoGUI{
 
     private JLabel drawText;
     private JLabel roundText;
+    private JLabel bg;
     
-    private DefaultFramWin df = new DefaultFramWin();
+    private ImageIcon backgroundGame;
     public DemoGUI(){
         initVariable();
         initLayer();
@@ -56,6 +60,8 @@ public class DemoGUI{
     }   
     
     void initVariable(){
+        backgroundGame = new ImageIcon(new ImageIcon("asset/image/backgroundGame.png").getImage().getScaledInstance(1000, 800, 0));
+
         frame = new JFrame("Demo WhiteJack");
 
         layer1 = new JLayeredPane();
@@ -72,11 +78,19 @@ public class DemoGUI{
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
+        
+
+        bg = new JLabel(backgroundGame);
+        bg.setBounds(0, 0, 1000, 800);
     }
 
     void initLayer(){
         xPosLy = 10;
         yPosLy = 10;
+
+        roundText.setForeground(new ColorUIResource(255,215,0));
+        bg.setBounds(0, 0, 1000, 800);
+
         layer1.setBounds(xPosLy, yPosLy, 200, 800);
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
@@ -84,7 +98,7 @@ public class DemoGUI{
         drawText.setBounds(350, 50, 500, 300);
 
         DefaultFramWin.customFont(roundText, 100);
-        roundText.setBounds(280, 10, 600, 100);
+        roundText.setBounds(280, 20, 600, 100);
     }
 
     void initFrame(){
@@ -94,6 +108,7 @@ public class DemoGUI{
         frame.add(btnHit);
         frame.add(btnStand);
         frame.add(btnSurrender);
+        frame.getContentPane().add(bg);
         frame.setSize(1000, 800);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
@@ -131,8 +146,10 @@ public class DemoGUI{
 
                     if(player2.getSumScore() == player1.getSumScore()){
                         standP2 = true;
+                        System.out.println("Stan : "+ standP2);
                         btnSurrender.setLocation(450, 450);
-                        frame.add(btnStand);
+                        // frame.add(btnStand);
+                        btnStand.setEnabled(true);
                         frame.repaint();
                     }
 
@@ -166,8 +183,10 @@ public class DemoGUI{
 
                     if(player2.getSumScore() == player1.getSumScore() && player1.getSumScore() != 0){
                         standP2 = true;
+                        System.out.println("Stan : "+ standP2);
                         btnSurrender.setLocation(450, 450);
-                        frame.add(btnStand);
+                        // frame.add(btnStand);
+                        btnStand.setEnabled(true);
                         frame.repaint();
                     }
                     
@@ -204,8 +223,9 @@ public class DemoGUI{
                     }else{ swap = true;}
                     yPosCard = 0;
                     cntZOrder = 0;
-                    frame.remove(btnStand);
-                    btnSurrender.setLocation(450, 400);
+                    // frame.remove(btnStand);
+                    btnStand.setEnabled(false);
+                    // btnSurrender.setLocation(450, 400);
                 }
             }
         });
@@ -264,22 +284,20 @@ public class DemoGUI{
                 @Override
                 public void run() {
                     lg.resetRound();
-                    cwLogic.reset(player1, player2);        
-                    reset();
+                    cwLogic.reset(player1, player2); 
 
                 }    
-            },2000);
+            },500);
         }else if(player2.getWinCollect()==6){
             Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     lg.resetRound();
-                    cwLogic.reset(player1, player2);        
-                    reset();
+                    cwLogic.reset(player1, player2); 
 
                 }    
-            },2000);
+            },500);
         }
     
         lg.setRound(1);
@@ -294,7 +312,8 @@ public class DemoGUI{
         layer1.removeAll();
         layer2.removeAll();
         btnSurrender.setLocation(450, 450);
-        frame.add(btnStand);
+        // frame.add(btnStand);
+        btnStand.setEnabled(true);
         
         player1.clearCard();
         player1.resetSumScore();
