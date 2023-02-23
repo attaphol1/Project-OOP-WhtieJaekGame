@@ -1,5 +1,6 @@
 package src.WaitingForConnection;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
@@ -19,8 +20,9 @@ public class DefaultFramWin {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new WinGame();
         winText = new JLabel("Player 1 WIN!!!");
-        DefaultFramWin.customFont(winText,50);
-        winText.setBounds(280, 150, 500, 500);
+        DefaultFramWin.customFont(winText,60);
+        winText.setBounds(240, 150, 600, 500);
+        winText.setForeground(Color.PINK);
 
         frame.add(winText);
         frame.add(panel);
