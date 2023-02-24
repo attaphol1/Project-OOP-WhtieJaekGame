@@ -57,6 +57,7 @@ public class DemoGUI{
         initLayer();
         initButton();
         initFrame();
+        defaultGame();
         initLogic();
     }   
     
@@ -208,8 +209,8 @@ public class DemoGUI{
                 }
                 else{
                     swap = (lg.getRound() % 2 == 0)? false:true;
-                    yPosCard = 0;
-                    cntZOrder = 0;
+                    yPosCard = 50;
+                    cntZOrder = 1;
                     btnStand.setEnabled(false);
                 }
             }
@@ -256,8 +257,6 @@ public class DemoGUI{
         btnSurrender.setEnabled(true);
     }
     
-    //------------------- Play zone -------------------------//
-    // private int lose1 = 0;
     public void reset(){
         checkWin();
         swap = (lg.getRound() %2 == 0) ? false:true;
@@ -282,6 +281,7 @@ public class DemoGUI{
         player2.clearCard();        
         player2.resetSumScore();   
 
+        defaultGame();
         frame.repaint();
     } 
 
@@ -298,5 +298,28 @@ public class DemoGUI{
             },500);
             lg.resetRound();
         }
+    }
+
+    void defaultGame(){
+        Card c = deck.getCardRand(player1,player2);
+        player1.setListCard(c);
+        player1.setSumScore(c.getRank());
+
+        c.getLabel().setLocation(xPosCard, yPosCard);
+
+        System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
+        layer1.add(c.getLabel(),Integer.valueOf(0));    
+        
+        c = deck.getCardRand(player1,player2);
+        player2.setListCard(c);
+        player2.setSumScore(c.getRank());
+
+        c.getLabel().setLocation(xPosCard, yPosCard);
+
+        System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
+        layer2.add(c.getLabel(),Integer.valueOf(0));  
+
+        cntZOrder++;
+        yPosCard+=50;
     }
 }

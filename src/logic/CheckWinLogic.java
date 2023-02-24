@@ -71,7 +71,7 @@ public class CheckWinLogic{
             },1000);
             check = true;
         }
-        else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore() && p1.getSumScore() != 0){
+        else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore() && p1.getListCard().size() > 1 && p2.getListCard().size() > 1){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -83,7 +83,7 @@ public class CheckWinLogic{
             check = true;
         }
 
-        else if(round % 2 == 0 && p1.getSumScore() > p2.getSumScore() && p2.getSumScore() != 0){
+        else if(round % 2 == 0 && p1.getSumScore() > p2.getSumScore() && p2.getListCard().size() > 1 && p1.getListCard().size() > 1){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
