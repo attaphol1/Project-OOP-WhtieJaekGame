@@ -97,7 +97,7 @@ public class CheckWinLogic{
     }
 
     public void reset(Player p1, Player p2){
-        victory = random.nextInt(31-21) + 21;
+        victory = random.nextInt(41-21) + 21;
         p1.reset();
         p2.reset();
         df.resetWinGame();

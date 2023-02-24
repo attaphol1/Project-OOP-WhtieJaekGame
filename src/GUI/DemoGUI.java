@@ -30,7 +30,7 @@ public class DemoGUI{
     private int cntZOrder = 0;
 
     private boolean swap = false;
-    private boolean standP2 = false;
+    private boolean swapPlayer = true;
 
     private JFrame frame;
 
@@ -50,7 +50,7 @@ public class DemoGUI{
     private JLabel roundText;
     private JLabel whiteJackNumber;
     private JLabel bg;
-    
+
     private ImageIcon backgroundGame;
     public DemoGUI(){
         initVariable();
@@ -96,18 +96,20 @@ public class DemoGUI{
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
         DefaultFramWin.customFont(drawText, 100);
-        drawText.setBounds(350, 50, 500, 300);
+        drawText.setBounds(350, 400, 500, 300);
+        drawText.setForeground(new ColorUIResource(255,250,250));
 
         DefaultFramWin.customFont(roundText, 100);
         roundText.setBounds(280, 20, 600, 100);
 
         DefaultFramWin.customFont(whiteJackNumber, 75);
         whiteJackNumber.setBounds(200, 50, 800, 300);
-        whiteJackNumber.setForeground(new ColorUIResource(255,215,0));
+        whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
     }
 
     void initFrame(){
         frame.add(roundText);
+        frame.add(drawText).setVisible(false);
         frame.add(whiteJackNumber);
         frame.add(layer1);
         frame.add(layer2);
@@ -151,30 +153,15 @@ public class DemoGUI{
                     cwLogic.checkWin(player1, player2);
 
                     if(player2.getSumScore() == player1.getSumScore()){
-                        standP2 = true;
-                        System.out.println("Stan : "+ standP2);
-                        // btnSurrender.setLocation(450, 450);
-                        // frame.add(btnStand);
+                        swapPlayer = false;
+                        System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
                         frame.repaint();
                     }
-
-                    if(cwLogic.isSomeOneWin()){
-                        enableBtn();
-                        Timer timer1 = new Timer();
-                        timer1.schedule(new TimerTask() {
-                        @Override
-                            public void run() {
-                            disableBtn();
-                            reset();
-                            }    
-                        },5000);
-                        cwLogic.setCheck(false);
-                    }
                 }
-                else{
+                else if(!swap){
                     Card c = deck.getCardRand(player1,player2);
-
+                    
                     player1.setListCard(c);
                     player1.setSumScore(c.getRank());
                     
@@ -184,31 +171,27 @@ public class DemoGUI{
                     System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
                     
                     layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-                    
+
                     cwLogic.checkWin(player1, player2);
 
                     if(player2.getSumScore() == player1.getSumScore() && player1.getSumScore() != 0){
-                        standP2 = true;
-                        System.out.println("Stan : "+ standP2);
-                        // btnSurrender.setLocation(450, 450);
-                        // frame.add(btnStand);
+                        swapPlayer = false;
+                        System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
                         frame.repaint();
                     }
-                    
-                    if(cwLogic.isSomeOneWin()){
+                }
+                if(cwLogic.isSomeOneWin()){
+                    disableBtn();
+                    Timer timer1 = new Timer();
+                    timer1.schedule(new TimerTask() {
+                    @Override
+                        public void run() {
                         enableBtn();
-                        Timer timer1 = new Timer();
-                        timer1.schedule(new TimerTask() {
-                        @Override
-                            public void run() {
-                            disableBtn();
-                            reset();
-                            }    
-                        },5000);
-
-                        cwLogic.setCheck(false);
-                    }
+                        reset();
+                        }    
+                    },5000);
+                    cwLogic.setCheck(false);
                 }
             }
         });
@@ -219,17 +202,15 @@ public class DemoGUI{
             public void actionPerformed(ActionEvent e) {
 
                 // TODO Auto-generated method stub
-                if(standP2){
+                if(!swapPlayer){
                     draw();
-                    standP2 = false;
+                    swapPlayer = true;
                 }
                 else{
                     swap = (lg.getRound() % 2 == 0)? false:true;
                     yPosCard = 0;
                     cntZOrder = 0;
-                    // frame.remove(btnStand);
                     btnStand.setEnabled(false);
-                    // btnSurrender.setLocation(450, 400);
                 }
             }
         });
@@ -250,28 +231,26 @@ public class DemoGUI{
     
     private void draw() {
         System.out.println("draw");
-        frame.add(drawText);
-        frame.repaint();
-        enableBtn();
+        drawText.setVisible(true);
+        disableBtn();
         Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    frame.remove(drawText);
-                    frame.repaint();
-                    disableBtn();
+                    drawText.setVisible(false);
+                    enableBtn();
                     reset();
                 }    
             },5000);
     }
 
-    public void enableBtn(){
+    public void disableBtn(){
         btnHit.setEnabled(false);
         btnStand.setEnabled(false);
         btnSurrender.setEnabled(false);
     }
 
-    public void disableBtn(){
+    public void enableBtn(){
         btnHit.setEnabled(true);
         btnStand.setEnabled(true);
         btnSurrender.setEnabled(true);
@@ -280,28 +259,7 @@ public class DemoGUI{
     //------------------- Play zone -------------------------//
     // private int lose1 = 0;
     public void reset(){
-        
-        if(player1.getWinCollect()==6){
-            Timer timer1 = new Timer();
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    cwLogic.reset(player1, player2); 
-                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
-                }    
-            },500);
-            lg.resetRound();
-        }else if(player2.getWinCollect()==6){
-            Timer timer1 = new Timer();
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    cwLogic.reset(player1, player2); 
-                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
-                }    
-            },500);
-            lg.resetRound();
-        }
+        checkWin();
         swap = (lg.getRound() %2 == 0) ? false:true;
     
         lg.setRound(1);
@@ -326,4 +284,19 @@ public class DemoGUI{
 
         frame.repaint();
     } 
+
+    void checkWin(){
+        if(player1.getWinCollect() == 6 || player2.getWinCollect() == 6){
+            Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    cwLogic.reset(player1, player2); 
+                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
+                    frame.repaint();
+                }    
+            },500);
+            lg.resetRound();
+        }
+    }
 }
