@@ -2,18 +2,22 @@ package src.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
 import src.model.Card;
 import src.model.Deck;
+import src.model.DrawCardButton;
 import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
@@ -37,7 +41,6 @@ public class DemoGUI{
     private JLayeredPane layer1;
     private JLayeredPane layer2;
 
-    private JButton btnHit; //Draw
     private JButton btnSurrender; //Give up
     private JButton btnStand; //Next Player
 
@@ -45,6 +48,7 @@ public class DemoGUI{
     private Player player1;
     private Player player2;
     private CheckWinLogic cwLogic;
+    private DrawCardButton btnDraw;
 
     private JLabel drawText;
     private JLabel roundText;
@@ -52,6 +56,8 @@ public class DemoGUI{
     private JLabel bg;
 
     private ImageIcon backgroundGame;
+
+    private ClickListener cl;
     public DemoGUI(){
         initVariable();
         initLayer();
@@ -69,7 +75,6 @@ public class DemoGUI{
         layer1 = new JLayeredPane();
         layer2 = new JLayeredPane();
 
-        btnHit = new JButton("Hit");
         btnStand = new JButton("Stand");
         btnSurrender = new JButton("Reset");
 
@@ -77,6 +82,7 @@ public class DemoGUI{
         player1 = new Player();
         player2 = new Player();
         cwLogic = new CheckWinLogic();
+        btnDraw = new DrawCardButton();
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
@@ -84,6 +90,8 @@ public class DemoGUI{
         
         bg = new JLabel(backgroundGame);
         bg.setBounds(0, 0, 1000, 800);
+
+        cl = new ClickListener();
     }
 
     void initLayer(){
@@ -114,7 +122,7 @@ public class DemoGUI{
         frame.add(whiteJackNumber);
         frame.add(layer1);
         frame.add(layer2);
-        frame.add(btnHit);
+        frame.add(btnDraw.getLabel());
         frame.add(btnStand);
         frame.add(btnSurrender);
         frame.getContentPane().add(bg);
@@ -127,17 +135,154 @@ public class DemoGUI{
     }
 
     void initButton(){
-        btnHit.setBounds(450, 350, 50, 40);
-        btnStand.setBounds(450, 400, 100, 40);
-        btnSurrender.setBounds(450, 450, 100, 40);
+        btnDraw.getLabel().setLocation(375,300);
+        btnStand.setBounds(450, 500, 100, 40);
+        btnSurrender.setBounds(450, 550, 100, 40);
     }
 
     void initLogic(){
 
-        btnHit.addActionListener(new ActionListener(){
+        btnDraw.getLabel().addMouseListener(cl);
+        btnStand.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // TODO Auto-generated method stub
+                if(!swapPlayer){
+                    draw();
+                    swapPlayer = true;
+                }
+                else{
+                    swap = (lg.getRound() % 2 == 0)? false:true;
+                    yPosCard = 50;
+                    cntZOrder = 1;
+                    btnStand.setEnabled(false);
+                }
+            }
+        });
+
+        btnSurrender.addActionListener(new ActionListener(){
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
+                cwLogic.reset(player1, player2);        
+                lg.resetRound();
+                reset();
+            }
+            
+        });
+        
+    }
+    
+    private void draw() {
+        System.out.println("draw");
+        drawText.setVisible(true);
+        disableBtn();
+        Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    drawText.setVisible(false);
+                    enableBtn();
+                    reset();
+                }    
+            },5000);
+    }
+
+    public void disableBtn(){
+        
+        btnDraw.getLabel().setVisible(false);
+        btnStand.setEnabled(false);
+        btnSurrender.setEnabled(false);
+
+    }
+
+    public void enableBtn(){
+        btnDraw.getLabel().setVisible(true);
+        btnStand.setEnabled(true);
+        btnSurrender.setEnabled(true);
+    }
+    
+    public void reset(){
+        checkWin();
+        swap = (lg.getRound() %2 == 0) ? false:true;
+    
+        lg.setRound(1);
+        cwLogic.setRound(lg.getRound());
+        System.out.println("round "+lg.getRound());
+        roundText.setText("ROUND " + lg.getRound());
+
+        xPosLy = 10;
+        yPosLy = 10;
+        yPosCard = 0;
+        cntZOrder = 0;
+        layer1.removeAll();
+        layer2.removeAll();
+        btnSurrender.setLocation(450, 550);
+        // frame.add(btnStand);
+        btnStand.setEnabled(true);
+        
+        player1.clearCard();
+        player1.resetSumScore();
+        player2.clearCard();        
+        player2.resetSumScore();   
+
+        defaultGame();
+        frame.repaint();
+    } 
+
+    void checkWin(){
+        if(player1.getWinCollect() == 6 || player2.getWinCollect() == 6){
+            Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    cwLogic.reset(player1, player2); 
+                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
+                    frame.repaint();
+                }    
+            },500);
+            lg.resetRound();
+        }
+    }
+
+    void defaultGame(){
+
+        Card c = deck.getCardRand(player1,player2);
+        player1.setListCard(c);
+        player1.setSumScore(c.getRank());
+
+        c.getLabel().setLocation(xPosCard, yPosCard);
+
+        System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
+        layer1.add(c.getLabel(),Integer.valueOf(0));    
+        
+        c = deck.getCardRand(player1,player2);
+        player2.setListCard(c);
+        player2.setSumScore(c.getRank());
+
+        c.getLabel().setLocation(xPosCard, yPosCard);
+
+        System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
+        layer2.add(c.getLabel(),Integer.valueOf(0));  
+
+        cntZOrder++;
+        yPosCard+=50;
+
+        if(player1.getListCard().size() == 1 && player2.getListCard().size() == 1){
+            btnStand.setEnabled(false);
+        }
+    }
+    
+    private class ClickListener implements MouseInputListener{
+    
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            JLabel jlb = (JLabel)e.getSource();
+            // TODO Auto-generated method stub
+            if(jlb == btnDraw.getLabel()){
                 if(swap){
                     Card c = deck.getCardRand(player1,player2);
 
@@ -199,137 +344,48 @@ public class DemoGUI{
                     btnStand.setEnabled(true);
                 }
             }
-        });
 
-        btnStand.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                // TODO Auto-generated method stub
-                if(!swapPlayer){
-                    draw();
-                    swapPlayer = true;
-                }
-                else{
-                    swap = (lg.getRound() % 2 == 0)? false:true;
-                    yPosCard = 50;
-                    cntZOrder = 1;
-                    btnStand.setEnabled(false);
-                }
-            }
-        });
-
-        btnSurrender.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                cwLogic.reset(player1, player2);        
-                lg.resetRound();
-                reset();
-            }
-            
-        });
-        
-    }
-    
-    private void draw() {
-        System.out.println("draw");
-        drawText.setVisible(true);
-        disableBtn();
-        Timer timer1 = new Timer();
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    drawText.setVisible(false);
-                    enableBtn();
-                    reset();
-                }    
-            },5000);
-    }
-
-    public void disableBtn(){
-        btnHit.setEnabled(false);
-        btnStand.setEnabled(false);
-        btnSurrender.setEnabled(false);
-
-    }
-
-    public void enableBtn(){
-        btnHit.setEnabled(true);
-        btnStand.setEnabled(true);
-        btnSurrender.setEnabled(true);
-    }
-    
-    public void reset(){
-        checkWin();
-        swap = (lg.getRound() %2 == 0) ? false:true;
-    
-        lg.setRound(1);
-        cwLogic.setRound(lg.getRound());
-        System.out.println("round "+lg.getRound());
-        roundText.setText("ROUND " + lg.getRound());
-
-        xPosLy = 10;
-        yPosLy = 10;
-        yPosCard = 0;
-        cntZOrder = 0;
-        layer1.removeAll();
-        layer2.removeAll();
-        btnSurrender.setLocation(450, 450);
-        // frame.add(btnStand);
-        btnStand.setEnabled(true);
-        
-        player1.clearCard();
-        player1.resetSumScore();
-        player2.clearCard();        
-        player2.resetSumScore();   
-
-        defaultGame();
-        frame.repaint();
-    } 
-
-    void checkWin(){
-        if(player1.getWinCollect() == 6 || player2.getWinCollect() == 6){
-            Timer timer1 = new Timer();
-            timer1.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    cwLogic.reset(player1, player2); 
-                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
-                    frame.repaint();
-                }    
-            },500);
-            lg.resetRound();
         }
-    }
-
-    void defaultGame(){
-
-        Card c = deck.getCardRand(player1,player2);
-        player1.setListCard(c);
-        player1.setSumScore(c.getRank());
-
-        c.getLabel().setLocation(xPosCard, yPosCard);
-
-        System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
-        layer1.add(c.getLabel(),Integer.valueOf(0));    
-        
-        c = deck.getCardRand(player1,player2);
-        player2.setListCard(c);
-        player2.setSumScore(c.getRank());
-
-        c.getLabel().setLocation(xPosCard, yPosCard);
-
-        System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
-        layer2.add(c.getLabel(),Integer.valueOf(0));  
-
-        cntZOrder++;
-        yPosCard+=50;
-
-        if(player1.getListCard().size() == 1 && player2.getListCard().size() == 1){
-            btnStand.setEnabled(false);
+    
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // TODO Auto-generated method stub
         }
+    
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // TODO Auto-generated method stub
+        }
+    
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // TODO Auto-generated method stub
+            JLabel jlb = (JLabel)e.getSource();
+            if(jlb == btnDraw.getLabel()){
+                btnDraw.setBorder();
+                frame.repaint();
+            }
+        }
+    
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // TODO Auto-generated method stub
+            JLabel jlb = (JLabel)e.getSource();
+            if(jlb == btnDraw.getLabel()){
+                btnDraw.removeBorder();
+                frame.repaint();
+            }
+        }
+    
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // TODO Auto-generated method stub
+        }
+    
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // TODO Auto-generated method stub
+        }
+    
     }
 }
