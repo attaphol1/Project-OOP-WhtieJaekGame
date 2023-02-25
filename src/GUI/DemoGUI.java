@@ -153,7 +153,7 @@ public class DemoGUI{
 
                     cwLogic.checkWin(player1, player2);
 
-                    if(player2.getSumScore() == player1.getSumScore()){
+                    if(player2.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
                         swapPlayer = false;
                         System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
@@ -175,7 +175,7 @@ public class DemoGUI{
 
                     cwLogic.checkWin(player1, player2);
 
-                    if(player2.getSumScore() == player1.getSumScore() && player1.getSumScore() != 0){
+                    if(player2.getSumScore() == player1.getSumScore() && player2.getListCard().size() > 1){
                         swapPlayer = false;
                         System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
@@ -193,6 +193,10 @@ public class DemoGUI{
                         }    
                     },5000);
                     cwLogic.setCheck(false);
+                }
+
+                if(player1.getListCard().size() > 1 || player2.getListCard().size() > 1){
+                    btnStand.setEnabled(true);
                 }
             }
         });
@@ -249,6 +253,7 @@ public class DemoGUI{
         btnHit.setEnabled(false);
         btnStand.setEnabled(false);
         btnSurrender.setEnabled(false);
+
     }
 
     public void enableBtn(){
@@ -301,6 +306,7 @@ public class DemoGUI{
     }
 
     void defaultGame(){
+
         Card c = deck.getCardRand(player1,player2);
         player1.setListCard(c);
         player1.setSumScore(c.getRank());
@@ -321,5 +327,9 @@ public class DemoGUI{
 
         cntZOrder++;
         yPosCard+=50;
+
+        if(player1.getListCard().size() == 1 && player2.getListCard().size() == 1){
+            btnStand.setEnabled(false);
+        }
     }
 }
