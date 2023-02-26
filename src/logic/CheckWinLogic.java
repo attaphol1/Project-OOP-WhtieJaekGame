@@ -1,6 +1,7 @@
 
 package src.logic;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,15 +13,19 @@ public class CheckWinLogic{
     private int victory;
     private boolean check = false;
 
+    private Random random;
+
     private DefaultFramWin df;
     private Timer timer = new Timer();
     public CheckWinLogic(){
-        victory = 21;
+        random = new Random();
+        victory = random.nextInt(31-21)+21;
+        System.out.println("Victory is "+victory);
         df = new DefaultFramWin();
     }
 
     public void checkWin(Player p1, Player p2){
-        System.out.println(round);
+        // System.out.println(round);
         if(p1.getSumScore() == victory){
             timer.schedule(new TimerTask() {
                 @Override
@@ -66,7 +71,7 @@ public class CheckWinLogic{
             },1000);
             check = true;
         }
-        else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore()){
+        else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore() && p1.getListCard().size() > 1 && p2.getListCard().size() > 1){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -78,7 +83,7 @@ public class CheckWinLogic{
             check = true;
         }
 
-        else if(round % 2 == 0 && p1.getSumScore() > p2.getSumScore()){
+        else if(round % 2 == 0 && p1.getSumScore() > p2.getSumScore() && p2.getListCard().size() > 1 && p1.getListCard().size() > 1){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -92,6 +97,7 @@ public class CheckWinLogic{
     }
 
     public void reset(Player p1, Player p2){
+        victory = random.nextInt(41-21) + 21;
         p1.reset();
         p2.reset();
         df.resetWinGame();
