@@ -1,15 +1,12 @@
 package src.GUI;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.event.MouseInputListener;
@@ -35,8 +32,7 @@ public class DemoGUI{
 
     private boolean swap = false;
     private boolean swapPlayer = true;
-
-    private JFrame frame;
+    private boolean pressStand = false;
 
     private JLayeredPane layer1;
     private JLayeredPane layer2;
@@ -49,6 +45,8 @@ public class DemoGUI{
     private Player player2;
     private CheckWinLogic cwLogic;
     private DrawCardButton btnDraw;
+
+    private JLabel mainFrame;
 
     private JLabel drawText;
     private JLabel roundText;
@@ -70,7 +68,7 @@ public class DemoGUI{
     void initVariable(){
         backgroundGame = new ImageIcon(new ImageIcon("asset/image/backgroundGame.png").getImage().getScaledInstance(1000, 800, 0));
 
-        frame = new JFrame("Demo WhiteJack");
+        mainFrame = new JLabel();
 
         layer1 = new JLayeredPane();
         layer2 = new JLayeredPane();
@@ -86,7 +84,7 @@ public class DemoGUI{
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
-        whiteJackNumber = new JLabel("Whitejack " + cwLogic.getVictory());
+        whiteJackNumber = new JLabel("> " + cwLogic.getVictory() + " <");
         
         bg = new JLabel(backgroundGame);
         bg.setBounds(0, 0, 1000, 800);
@@ -98,6 +96,8 @@ public class DemoGUI{
         xPosLy = 10;
         yPosLy = 10;
 
+        mainFrame.setBounds(0, 0, 1000, 800);
+
         roundText.setForeground(new ColorUIResource(255,215,0));
         bg.setBounds(0, 0, 1000, 800);
 
@@ -105,33 +105,28 @@ public class DemoGUI{
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
         DefaultFramWin.customFont(drawText, 100);
-        drawText.setBounds(350, 400, 500, 300);
+        drawText.setBounds(400, 400, 500, 300);
         drawText.setForeground(new ColorUIResource(255,250,250));
 
-        DefaultFramWin.customFont(roundText, 100);
-        roundText.setBounds(280, 20, 600, 100);
+        DefaultFramWin.customFont(roundText, 80);
+        roundText.setBounds(325, 120, 600, 100);
 
-        DefaultFramWin.customFont(whiteJackNumber, 75);
-        whiteJackNumber.setBounds(200, 50, 800, 300);
+        DefaultFramWin.customFont(whiteJackNumber, 100);
+        whiteJackNumber.setBounds(325, 20, 800, 100);
         whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
     }
 
     void initFrame(){
-        frame.add(roundText);
-        frame.add(drawText).setVisible(false);
-        frame.add(whiteJackNumber);
-        frame.add(layer1);
-        frame.add(layer2);
-        frame.add(btnDraw.getLabel());
-        frame.add(btnStand);
-        frame.add(btnSurrender);
-        frame.getContentPane().add(bg);
-        frame.setSize(1000, 800);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.add(roundText);
+        mainFrame.add(drawText).setVisible(false);
+        mainFrame.add(whiteJackNumber);
+        mainFrame.add(layer1);
+        mainFrame.add(layer2);
+        mainFrame.add(btnDraw.getLabel());
+        mainFrame.add(btnStand);
+        mainFrame.add(btnSurrender);
+        mainFrame.setIcon(backgroundGame);
+        mainFrame.setVisible(false);
     }
 
     void initButton(){
@@ -149,6 +144,7 @@ public class DemoGUI{
             public void actionPerformed(ActionEvent e) {
 
                 // TODO Auto-generated method stub
+                pressStand = true;
                 if(!swapPlayer){
                     draw();
                     swapPlayer = true;
@@ -169,6 +165,8 @@ public class DemoGUI{
                 // TODO Auto-generated method stub
                 cwLogic.reset(player1, player2);        
                 lg.resetRound();
+                whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
+                mainFrame.repaint();
                 reset();
             }
             
@@ -208,6 +206,8 @@ public class DemoGUI{
     public void reset(){
         checkWin();
         swap = (lg.getRound() %2 == 0) ? false:true;
+        pressStand = false;
+        swapPlayer = true;
     
         lg.setRound(1);
         cwLogic.setRound(lg.getRound());
@@ -221,7 +221,6 @@ public class DemoGUI{
         layer1.removeAll();
         layer2.removeAll();
         btnSurrender.setLocation(450, 550);
-        // frame.add(btnStand);
         btnStand.setEnabled(true);
         
         player1.clearCard();
@@ -230,7 +229,7 @@ public class DemoGUI{
         player2.resetSumScore();   
 
         defaultGame();
-        frame.repaint();
+        mainFrame.repaint();
     } 
 
     void checkWin(){
@@ -240,8 +239,8 @@ public class DemoGUI{
                 @Override
                 public void run() {
                     cwLogic.reset(player1, player2); 
-                    whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
-                    frame.repaint();
+                    whiteJackNumber.setText("> " + cwLogic.getVictory() + " <");
+                    mainFrame.repaint();
                 }    
             },500);
             lg.resetRound();
@@ -275,6 +274,10 @@ public class DemoGUI{
             btnStand.setEnabled(false);
         }
     }
+
+    public JLabel getMainFrame() {
+        return mainFrame;
+    }  
     
     private class ClickListener implements MouseInputListener{
     
@@ -302,7 +305,7 @@ public class DemoGUI{
                         swapPlayer = false;
                         System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
-                        frame.repaint();
+                        mainFrame.repaint();
                     }
                 }
                 else if(!swap){
@@ -324,7 +327,7 @@ public class DemoGUI{
                         swapPlayer = false;
                         System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
-                        frame.repaint();
+                        mainFrame.repaint();
                     }
                 }
                 if(cwLogic.isSomeOneWin()){
@@ -340,7 +343,7 @@ public class DemoGUI{
                     cwLogic.setCheck(false);
                 }
 
-                if(player1.getListCard().size() > 1 || player2.getListCard().size() > 1){
+                if(!pressStand && (player1.getListCard().size() > 1 || player2.getListCard().size() > 1)){
                     btnStand.setEnabled(true);
                 }
             }
@@ -363,7 +366,7 @@ public class DemoGUI{
             JLabel jlb = (JLabel)e.getSource();
             if(jlb == btnDraw.getLabel()){
                 btnDraw.setBorder();
-                frame.repaint();
+                mainFrame.repaint();
             }
         }
     
@@ -373,7 +376,7 @@ public class DemoGUI{
             JLabel jlb = (JLabel)e.getSource();
             if(jlb == btnDraw.getLabel()){
                 btnDraw.removeBorder();
-                frame.repaint();
+                mainFrame.repaint();
             }
         }
     
@@ -387,5 +390,5 @@ public class DemoGUI{
             // TODO Auto-generated method stub
         }
     
-    }
+    }  
 }

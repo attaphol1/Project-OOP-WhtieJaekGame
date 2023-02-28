@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 public class DrawCardButton {
     private JLabel lb;
     private ImageIcon imageIcon;
+    private ImageIcon imageIconBorder;
 
     private int width;
     private int height;
@@ -18,6 +19,7 @@ public class DrawCardButton {
         height = 162;
         lb = new JLabel();
         imageIcon = new ImageIcon(new ImageIcon("asset/card/deck-of-card.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        imageIconBorder = new ImageIcon(new ImageIcon("asset/card/deck-of-card-border-yellow.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         lb.setIcon(imageIcon);
         lb.setSize(new Dimension(width, height));
     }
@@ -27,8 +29,7 @@ public class DrawCardButton {
     }
 
     public void setBorder() {
-        ImageIcon image = new ImageIcon(new ImageIcon("asset/card/deck-of-card-border-yellow.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-        lb.setIcon(image);
+        lb.setIcon(imageIconBorder);
     }
 
     public void removeBorder() {

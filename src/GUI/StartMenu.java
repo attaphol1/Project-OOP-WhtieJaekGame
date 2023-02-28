@@ -12,6 +12,7 @@ import java.awt.*;
 
 
 public class StartMenu extends JFrame{
+    JLabel mainFrame;
 
     JLabel startClick;
     JLabel stopClick;
@@ -23,6 +24,10 @@ public class StartMenu extends JFrame{
     JLabel nametopic;
 
     JFrame frame;
+
+    ClickListener cl = new ClickListener();
+
+    DemoGUI demo = new DemoGUI();
 
     public StartMenu(){
         importIcon();
@@ -51,105 +56,9 @@ public class StartMenu extends JFrame{
         stopClick.setBounds(295, 500, 400, 100);
         // stopClick.setOpaque(true);
 
-        startClick.addMouseListener(new MouseInputListener() {
+        startClick.addMouseListener(cl);
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Start Game");              
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                startClick.setIcon(iconStart_Click);
-                
-            }
-            
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        startClick.setIcon(iconStart);
-                        frame.setVisible(false);
-                        new DemoGUI();
-                    }    
-                },200);
-                
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-        });
-
-        stopClick.addMouseListener(new MouseInputListener() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Quit Game");
-                System.exit(0);
-                
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                stopClick.setIcon(iconStop_Click);
-                
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                stopClick.setIcon(iconStop);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-        });
+        stopClick.addMouseListener(cl);
     }
 
     void importIcon(){
@@ -162,19 +71,98 @@ public class StartMenu extends JFrame{
     }
 
     void menuFrame(){
+        mainFrame = new JLabel();
+        mainFrame.setBounds(0, 0, 1000, 800);
+
         frame = new JFrame("White Jack");
-        JLabel background = new JLabel(hiImg);
-        background.setBounds(0, 100, 1000, 800);
+        // JLabel background = new JLabel(hiImg);
+        // background.setBounds(0, 0, 800, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // this.setLayout(null);
         frame.setSize(1000, 800);
         frame.setResizable(false);
-        frame.add(stopClick);
-        frame.add(startClick);
-        frame.add(nametopic);
+        mainFrame.add(stopClick);
+        mainFrame.add(startClick);
+        // mainFrame.add(nametopic);
+        mainFrame.setIcon(hiImg);
+        frame.add(mainFrame);
+        frame.add(demo.getMainFrame());
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(background);
+    }
+
+    private class ClickListener implements MouseInputListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // TODO Auto-generated method stub
+            JLabel sourse = (JLabel)(e.getSource());
+            if(sourse == startClick){
+                System.out.println("Start Game"); 
+            }
+            else if(sourse == stopClick){
+                System.out.println("Quit Game");
+                System.exit(0);
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // TODO Auto-generated method stub
+            JLabel sourse = (JLabel)(e.getSource());
+            if(sourse == startClick){
+                startClick.setIcon(iconStart_Click);
+            }
+            else if(sourse == stopClick){
+                stopClick.setIcon(iconStop_Click);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // TODO Auto-generated method stub
+            JLabel sourse = (JLabel)(e.getSource());
+            if(sourse == startClick){
+                Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            startClick.setIcon(iconStart);
+                            mainFrame.setVisible(false);
+                            demo.getMainFrame().setVisible(true);
+                            frame.repaint();
+                        }    
+                    },1000);
+            }
+            else if(sourse == stopClick){
+                stopClick.setIcon(iconStop);
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
     }
 
 }

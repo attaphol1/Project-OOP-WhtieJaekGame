@@ -64,6 +64,7 @@ class Test2{
                 cnt++;
                 // TODO Auto-generated method stub
                 // fT2.removeAll();
+                fT2.remove(lb);
                 initLabel();
                 fT2.repaint();
             } 
