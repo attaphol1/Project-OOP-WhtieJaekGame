@@ -84,7 +84,7 @@ public class DemoGUI{
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
-        whiteJackNumber = new JLabel("> " + cwLogic.getVictory() + " <");
+        whiteJackNumber = new JLabel("< " + cwLogic.getVictory());
         
         bg = new JLabel(backgroundGame);
         bg.setBounds(0, 0, 1000, 800);
@@ -105,7 +105,7 @@ public class DemoGUI{
         layer2.setBounds(xPosLy+822, yPosLy, 200, 800);
 
         DefaultFramWin.customFont(drawText, 100);
-        drawText.setBounds(400, 400, 500, 300);
+        drawText.setBounds(350, 250, 500, 300);
         drawText.setForeground(new ColorUIResource(255,250,250));
 
         DefaultFramWin.customFont(roundText, 80);
@@ -151,6 +151,12 @@ public class DemoGUI{
                 }
                 else{
                     swap = (lg.getRound() % 2 == 0)? false:true;
+                    if(swap == false){
+                        whiteJackNumber.setText("< "+cwLogic.getVictory());
+                    }
+                    else{
+                        whiteJackNumber.setText("  "+cwLogic.getVictory() + " >");
+                    }
                     yPosCard = 50;
                     cntZOrder = 1;
                     btnStand.setEnabled(false);
@@ -165,7 +171,7 @@ public class DemoGUI{
                 // TODO Auto-generated method stub
                 cwLogic.reset(player1, player2);        
                 lg.resetRound();
-                whiteJackNumber.setText("Whitejack " + cwLogic.getVictory());
+                whiteJackNumber.setText("< " + cwLogic.getVictory());
                 mainFrame.repaint();
                 reset();
             }
@@ -206,6 +212,12 @@ public class DemoGUI{
     public void reset(){
         checkWin();
         swap = (lg.getRound() %2 == 0) ? false:true;
+        if(swap == false){
+            whiteJackNumber.setText("< "+cwLogic.getVictory());
+        }
+        else{ 
+            whiteJackNumber.setText("  "+cwLogic.getVictory() + " >");
+        }
         pressStand = false;
         swapPlayer = true;
     
@@ -283,6 +295,7 @@ public class DemoGUI{
     
         @Override
         public void mouseClicked(MouseEvent e) {
+            
             JLabel jlb = (JLabel)e.getSource();
             // TODO Auto-generated method stub
             if(jlb == btnDraw.getLabel()){

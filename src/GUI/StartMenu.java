@@ -28,6 +28,7 @@ public class StartMenu extends JFrame{
     ClickListener cl = new ClickListener();
 
     DemoGUI demo = new DemoGUI();
+    LoadingFrame loading = new LoadingFrame(5);
 
     public StartMenu(){
         importIcon();
@@ -85,8 +86,11 @@ public class StartMenu extends JFrame{
         mainFrame.add(startClick);
         // mainFrame.add(nametopic);
         mainFrame.setIcon(hiImg);
+
         frame.add(mainFrame);
         frame.add(demo.getMainFrame());
+        frame.add(loading.getMainFrame());
+        
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
@@ -128,11 +132,15 @@ public class StartMenu extends JFrame{
                         @Override
                         public void run() {
                             startClick.setIcon(iconStart);
-                            mainFrame.setVisible(false);
+                            loading.getMainFrame().setVisible(false);
                             demo.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
-                    },1000);
+                    },5000);
+                    
+                    mainFrame.setVisible(false);
+                    loading.getMainFrame().setVisible(true);
+                    loading.start(frame);
             }
             else if(sourse == stopClick){
                 stopClick.setIcon(iconStop);
