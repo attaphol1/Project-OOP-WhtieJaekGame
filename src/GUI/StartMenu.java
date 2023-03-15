@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
+import javax.swing.plaf.ColorUIResource;
 
 import src.WaitingForConnection.DefaultFramWin;
 
@@ -23,6 +24,7 @@ public class StartMenu extends JFrame{
     ImageIcon iconStop_Click;
     ImageIcon iconStop;
     ImageIcon hiImg;
+    ImageIcon nTopic;
     JLabel nametopic;
 
     JFrame frame;
@@ -41,9 +43,11 @@ public class StartMenu extends JFrame{
 
     void nameGame(){
         nametopic = new JLabel();
-        nametopic.setText("WhiteJack");
-        nametopic.setBounds(200, 200, 800, 300);
-        DefaultFramWin.customFont(nametopic, 100);
+        // nametopic.setText("WhiteJack");
+        nametopic.setIcon(nTopic);
+        nametopic.setBounds(100, 25, 750, 100);
+        // DefaultFramWin.customFont(nametopic, 125);
+        // nametopic.setForeground(new ColorUIResource(0,0,0));
     }
 
     void btnClick(){
@@ -66,7 +70,7 @@ public class StartMenu extends JFrame{
         iconStart_Click = new ImageIcon(new ImageIcon("asset/image/Start-Button-Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop = new ImageIcon(new ImageIcon("asset/image/Quit-Button.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop_Click = new ImageIcon(new ImageIcon("asset/image/Quit-Buttom_Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
-        
+        nTopic = new ImageIcon(new ImageIcon("asset/image/Name-Topic.png").getImage().getScaledInstance(750, 100, DO_NOTHING_ON_CLOSE));
         hiImg = new ImageIcon(new ImageIcon("asset/image/king-heart-meme.jpg").getImage().getScaledInstance(1008, 1040, DO_NOTHING_ON_CLOSE));
     }
 
