@@ -71,6 +71,28 @@ public class CheckWinLogic{
             },1000);
             check = true;
         }
+        else if(round % 2 == 1 && p2.getListCard().size() > 1 && p1.getSumScore() > p2.getSumScore()){
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    p1.setWinCollect();
+                    df.playerOneWin(p1.getWinCollect());
+                    df.statusPlayerOneWin();
+                }    
+            },1000);
+            check = true;
+        }
+        else if(round % 2 == 1 && p2.getListCard().size() > 1 && p1.getSumScore() < p2.getSumScore()) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    p2.setWinCollect();
+                    df.playerTwoWin(p2.getWinCollect());
+                    df.statusPlayerTwoWin();
+                }    
+            },1000);
+            check = true;
+        }
         else if(round % 2 != 0 && p2.getSumScore() > p1.getSumScore() && p1.getListCard().size() > 1 && p2.getListCard().size() > 1){
             timer.schedule(new TimerTask() {
                 @Override

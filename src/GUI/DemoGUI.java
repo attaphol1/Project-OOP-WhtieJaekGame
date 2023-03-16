@@ -42,7 +42,7 @@ public class DemoGUI{
 
     private Deck deck;
     private Player player1;
-    private Player player2;
+    private Player bot;
     private CheckWinLogic cwLogic;
     private DrawCardButton btnDraw;
 
@@ -78,7 +78,7 @@ public class DemoGUI{
 
         deck = new Deck();
         player1 = new Player();
-        player2 = new Player();
+        bot = new Player();
         cwLogic = new CheckWinLogic();
         btnDraw = new DrawCardButton();
 
@@ -156,8 +156,11 @@ public class DemoGUI{
                     }
                     else{
                         whiteJackNumber.setText("  "+cwLogic.getVictory() + " >");
+                        yPosCard = 50;
+                        botPlay();
+                        cwLogic.checkWin(player1, bot);
+                        checkSomeOneWin();
                     }
-                    yPosCard = 50;
                     cntZOrder = 1;
                     btnStand.setEnabled(false);
                 }
@@ -169,7 +172,7 @@ public class DemoGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                cwLogic.reset(player1, player2);        
+                cwLogic.reset(player1, bot);        
                 lg.resetRound();
                 whiteJackNumber.setText("< " + cwLogic.getVictory());
                 mainFrame.repaint();
@@ -237,20 +240,20 @@ public class DemoGUI{
         
         player1.clearCard();
         player1.resetSumScore();
-        player2.clearCard();        
-        player2.resetSumScore();   
+        bot.clearCard();        
+        bot.resetSumScore();   
 
         defaultGame();
         mainFrame.repaint();
     } 
 
     void checkWin(){
-        if(player1.getWinCollect() == 6 || player2.getWinCollect() == 6){
+        if(player1.getWinCollect() == 6 || bot.getWinCollect() == 6){
             Timer timer1 = new Timer();
             timer1.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    cwLogic.reset(player1, player2); 
+                    cwLogic.reset(player1, bot); 
                     whiteJackNumber.setText("> " + cwLogic.getVictory() + " <");
                     mainFrame.repaint();
                 }    
@@ -261,7 +264,7 @@ public class DemoGUI{
 
     void defaultGame(){
 
-        Card c = deck.getCardRand(player1,player2);
+        Card c = deck.getCardRand(player1,bot);
         player1.setListCard(c);
         player1.setSumScore(c.getRank());
 
@@ -270,19 +273,27 @@ public class DemoGUI{
         System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
         layer1.add(c.getLabel(),Integer.valueOf(0));    
         
-        c = deck.getCardRand(player1,player2);
-        player2.setListCard(c);
-        player2.setSumScore(c.getRank());
+        c = deck.getCardRand(player1,bot);
+        bot.setListCard(c);
+        bot.setSumScore(c.getRank());
 
         c.getLabel().setLocation(xPosCard, yPosCard);
 
-        System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
+        System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
         layer2.add(c.getLabel(),Integer.valueOf(0));  
 
         cntZOrder++;
         yPosCard+=50;
 
-        if(player1.getListCard().size() == 1 && player2.getListCard().size() == 1){
+        if(swap){
+            botPlay();
+            checkSomeOneWin();
+            pressStand = true;
+            swap = (lg.getRound() % 2 == 0)? false:true;
+            yPosCard = 50;
+        }
+
+        if(player1.getListCard().size() == 1 && bot.getListCard().size() == 1){
             btnStand.setEnabled(false);
         }
     }
@@ -290,6 +301,46 @@ public class DemoGUI{
     public JLabel getMainFrame() {
         return mainFrame;
     }  
+
+    void checkSomeOneWin(){
+        if(cwLogic.isSomeOneWin()){
+            disableBtn();
+            Timer timer1 = new Timer();
+            timer1.schedule(new TimerTask() {
+            @Override
+                public void run() {
+                enableBtn();
+                reset();
+                }    
+            },5000);
+            cwLogic.setCheck(false);
+        }
+    }
+
+    void botPlay(){
+        while(bot.getSumScore() < cwLogic.getVictory()-9){
+            if(swap){
+                Card c = deck.getCardRand(player1,bot);
+
+                bot.setListCard(c);
+                bot.setSumScore(c.getRank());
+
+                c.getLabel().setLocation(xPosCard, yPosCard);
+
+                yPosCard += 50;
+
+                System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
+                layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+            }
+
+            if(bot.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
+                swapPlayer = false;
+                System.out.println("Stand : "+ swapPlayer);
+                btnStand.setEnabled(true);
+                mainFrame.repaint();
+            }
+        }
+    }
     
     private class ClickListener implements MouseInputListener{
     
@@ -299,30 +350,30 @@ public class DemoGUI{
             JLabel jlb = (JLabel)e.getSource();
             // TODO Auto-generated method stub
             if(jlb == btnDraw.getLabel()){
-                if(swap){
-                    Card c = deck.getCardRand(player1,player2);
+                // if(swap){
+                //     Card c = deck.getCardRand(player1,player2);
 
-                    player2.setListCard(c);
-                    player2.setSumScore(c.getRank());
+                //     player2.setListCard(c);
+                //     player2.setSumScore(c.getRank());
 
-                    c.getLabel().setLocation(xPosCard, yPosCard);
+                //     c.getLabel().setLocation(xPosCard, yPosCard);
 
-                    yPosCard += 50;
+                //     yPosCard += 50;
 
-                    System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
-                    layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+                //     System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
+                //     layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
 
-                    cwLogic.checkWin(player1, player2);
+                //     cwLogic.checkWin(player1, player2);
 
-                    if(player2.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
-                        swapPlayer = false;
-                        System.out.println("Stand : "+ swapPlayer);
-                        btnStand.setEnabled(true);
-                        mainFrame.repaint();
-                    }
-                }
-                else if(!swap){
-                    Card c = deck.getCardRand(player1,player2);
+                //     if(player2.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
+                //         swapPlayer = false;
+                //         System.out.println("Stand : "+ swapPlayer);
+                //         btnStand.setEnabled(true);
+                //         mainFrame.repaint();
+                //     }
+                // }
+                if(!swap){
+                    Card c = deck.getCardRand(player1,bot);
                     
                     player1.setListCard(c);
                     player1.setSumScore(c.getRank());
@@ -334,29 +385,18 @@ public class DemoGUI{
                     
                     layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
 
-                    cwLogic.checkWin(player1, player2);
+                    cwLogic.checkWin(player1, bot);
 
-                    if(player2.getSumScore() == player1.getSumScore() && player2.getListCard().size() > 1){
+                    if(bot.getSumScore() == player1.getSumScore() && bot.getListCard().size() > 1){
                         swapPlayer = false;
                         System.out.println("Stand : "+ swapPlayer);
                         btnStand.setEnabled(true);
                         mainFrame.repaint();
                     }
                 }
-                if(cwLogic.isSomeOneWin()){
-                    disableBtn();
-                    Timer timer1 = new Timer();
-                    timer1.schedule(new TimerTask() {
-                    @Override
-                        public void run() {
-                        enableBtn();
-                        reset();
-                        }    
-                    },5000);
-                    cwLogic.setCheck(false);
-                }
+                checkSomeOneWin();
 
-                if(!pressStand && (player1.getListCard().size() > 1 || player2.getListCard().size() > 1)){
+                if(!pressStand && (player1.getListCard().size() > 1 || bot.getListCard().size() > 1)){
                     btnStand.setEnabled(true);
                 }
             }
