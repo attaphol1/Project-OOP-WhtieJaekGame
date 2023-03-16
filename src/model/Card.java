@@ -5,31 +5,35 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Card {
-    private int width;
-    private int height;
+    private int width = 138;
+    private int height = 210;
     
     private int rank;
     private String type;
     private String path = "asset/card/";
 
-    private JLabel label;
+    private JLabel labelFront;
+    private JLabel labelBack; 
 
     Card(int rank, String type){
         this.rank = (rank >= 10)? 10:rank;
         this.type = type;
         path = path+type+"/"+rank+type.toLowerCase().charAt(0)+".png";
 
-        width = 138;
-        height = 210;
-
         initLabel();
     }
 
     void initLabel(){
-        label = new JLabel();
+        labelFront = new JLabel();
         ImageIcon image = new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-        label.setIcon(image);
-        label.setSize(width,height);
+        labelFront.setIcon(image);
+        labelFront.setSize(width,height);
+        
+        labelBack = new JLabel();
+        image = new ImageIcon(new ImageIcon("asset/card/back-card.png").getImage().getScaledInstance(width, height, 1));
+        labelBack.setIcon(image);
+        labelBack.setSize(width, height);;
+        
     }
 
     public int getWidth() {
@@ -56,12 +60,15 @@ public class Card {
         this.rank = rank;
     }
 
-    public JLabel getLabel() {
-        return label;
+    public JLabel getLabelFront() {
+        return labelFront;
     }
 
     public String getType(){
         return type;
     }
 
+    public JLabel getLabelBack() {
+        return labelBack;
+    }
 }
