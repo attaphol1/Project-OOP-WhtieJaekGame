@@ -164,7 +164,6 @@ public class DemoGUI{
     
     public void reset(){
         checkWin();
-        // swapPlayer = (lg.getRound() %2 == 0) ? false:true;
         whiteJackNumber.setText(Integer.toString(cwLogic.getVictory()));
     
         lg.setRound(1);
@@ -211,19 +210,20 @@ public class DemoGUI{
         player1.setListCard(c);
         player1.setSumScore(c.getRank());
 
-        c.getLabel().setLocation(xPosCard, yPosCard);
+        c.getLabelFront().setLocation(xPosCard, yPosCard);
 
         System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
-        layer1.add(c.getLabel(),Integer.valueOf(0));    
+        layer1.add(c.getLabelFront(),Integer.valueOf(0));    
         
         c = deck.getCardRand(player1,bot);
         bot.setListCard(c);
         bot.setSumScore(c.getRank());
 
-        c.getLabel().setLocation(xPosCard, yPosCard);
+        c.getLabelFront().setLocation(xPosCard, yPosCard);
+        c.getLabelBack().setLocation(xPosCard, yPosCard);
 
         System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
-        layer2.add(c.getLabel(),Integer.valueOf(0));  
+        layer2.add(c.getLabelBack(),Integer.valueOf(0));  
 
         cntZOrder = 1;
         yPosCard+=50;
@@ -265,8 +265,9 @@ public class DemoGUI{
             bot.setListCard(c);
             bot.setSumScore(c.getRank());
             
-            c.getLabel().setLocation(xPosCard, yPosCard);
-            layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+            c.getLabelFront().setLocation(xPosCard, yPosCard);
+            c.getLabelBack().setLocation(xPosCard, yPosCard);
+            layer2.add(c.getLabelBack(),Integer.valueOf(cntZOrder++));
             
             yPosCard += 50;
             
@@ -274,6 +275,7 @@ public class DemoGUI{
 
         }
         if(bot.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
+            bot.showCard(layer2);
             draw();
         }
     }
@@ -289,21 +291,26 @@ public class DemoGUI{
                 player1.setListCard(c);
                 player1.setSumScore(c.getRank());
                 
-                c.getLabel().setLocation(xPosCard, yPosCard);
+                c.getLabelFront().setLocation(xPosCard, yPosCard);
                 yPosCard += 50;
                 
                 System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
-                layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-
-                cwLogic.checkWin(player1, bot);
+                layer1.add(c.getLabelFront(),Integer.valueOf(cntZOrder++));
 
                 if(bot.getSumScore() == player1.getSumScore() && bot.getListCard().size() > 1){
                     btnStand.setEnabled(true);
                     mainFrame.repaint();
                 }
-                checkSomeOneWin();
                 if(lg.getRound() % 2 == 1 && (player1.getListCard().size() > 1)){
                     btnStand.setEnabled(true);
+                }
+                if(lg.getRound() % 2 == 0){
+                    btnStand.setEnabled(true);
+                }
+                if(player1.getSumScore() > cwLogic.getVictory()){
+                    bot.showCard(layer2);
+                    cwLogic.checkWin(player1, bot);
+                    checkSomeOneWin();
                 }
             }
         }
@@ -357,12 +364,23 @@ public class DemoGUI{
             JButton b = (JButton)e.getSource();
             if(b == btnStand){
                 if(lg.getRound() % 2 == 0){
-                    draw();
+                    bot.showCard(layer2);
+                    if(player1.getSumScore() == bot.getSumScore()){
+                        draw();
+                    }
+                    else{
+                        cwLogic.checkWin(player1, bot);
+                    }
+                    checkSomeOneWin();
                     btnStand.setEnabled(false);
                 }
                 else{
                     yPosCard = 50;
                     botPlay();
+                    bot.showCard(layer2);
+                    if(player1.getSumScore() == bot.getSumScore()){
+                        draw();
+                    }
                     cwLogic.checkWin(player1, bot);
                     checkSomeOneWin();
                 }

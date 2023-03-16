@@ -70,11 +70,11 @@ public class TestMethod{
                 player1.setListCard(c);
                 player1.setSumScore(c.getRank());
                 
-                c.getLabel().setLocation(xPosCard, yPosCard);
+                c.getLabelFront().setLocation(xPosCard, yPosCard);
                 yPosCard += 50;
                 
                 System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
-                layer1.add(c.getLabel(),Integer.valueOf(zOrder++));
+                layer1.add(c.getLabelFront(),Integer.valueOf(zOrder++));
             }
         }
 
