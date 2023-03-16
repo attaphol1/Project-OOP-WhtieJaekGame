@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import src.WaitingForConnection.DefaultFramWin;
+import src.model.Bot;
 import src.model.Player;
 
 public class CheckWinLogic{
@@ -24,7 +25,7 @@ public class CheckWinLogic{
         df = new DefaultFramWin();
     }
 
-    public void checkWin(Player p1, Player p2){
+    public void checkWin(Player p1, Bot p2){
         // System.out.println(round);
         if(p1.getSumScore() == victory){
             timer.schedule(new TimerTask() {

@@ -12,6 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
+import src.model.Bot;
 import src.model.Card;
 import src.model.Deck;
 import src.model.DrawCardButton;
@@ -23,16 +24,12 @@ import src.logic.CheckWinLogic;
 public class DemoGUI{
     private LogicGUI lg = new LogicGUI();
 
-    private int xPosLy;
-    private int yPosLy;
+    private int xPosLy = 10;
+    private int yPosLy = 10;
     private int xPosCard = 0;
     private int yPosCard = 0;
     
     private int cntZOrder = 0;
-
-    private boolean swap = false;
-    private boolean swapPlayer = true;
-    private boolean pressStand = false;
 
     private JLayeredPane layer1;
     private JLayeredPane layer2;
@@ -42,7 +39,7 @@ public class DemoGUI{
 
     private Deck deck;
     private Player player1;
-    private Player bot;
+    private Bot bot;
     private CheckWinLogic cwLogic;
     private DrawCardButton btnDraw;
 
@@ -62,7 +59,7 @@ public class DemoGUI{
         initButton();
         initFrame();
         defaultGame();
-        initLogic();
+        // initLogic();
     }   
     
     void initVariable(){
@@ -78,13 +75,13 @@ public class DemoGUI{
 
         deck = new Deck();
         player1 = new Player();
-        bot = new Player();
+        bot = new Bot();
         cwLogic = new CheckWinLogic();
         btnDraw = new DrawCardButton();
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
-        whiteJackNumber = new JLabel("< " + cwLogic.getVictory());
+        whiteJackNumber = new JLabel(Integer.toString(cwLogic.getVictory()));
         
         bg = new JLabel(backgroundGame);
         bg.setBounds(0, 0, 1000, 800);
@@ -93,8 +90,6 @@ public class DemoGUI{
     }
 
     void initLayer(){
-        xPosLy = 10;
-        yPosLy = 10;
 
         mainFrame.setBounds(0, 0, 1000, 800);
 
@@ -112,7 +107,7 @@ public class DemoGUI{
         roundText.setBounds(325, 120, 600, 100);
 
         DefaultFramWin.customFont(whiteJackNumber, 100);
-        whiteJackNumber.setBounds(325, 20, 800, 100);
+        whiteJackNumber.setBounds(425, 20, 800, 100);
         whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
     }
 
@@ -133,54 +128,9 @@ public class DemoGUI{
         btnDraw.getLabel().setLocation(375,300);
         btnStand.setBounds(450, 500, 100, 40);
         btnSurrender.setBounds(450, 550, 100, 40);
-    }
-
-    void initLogic(){
-
         btnDraw.getLabel().addMouseListener(cl);
-        btnStand.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                // TODO Auto-generated method stub
-                pressStand = true;
-                if(!swapPlayer){
-                    draw();
-                    swapPlayer = true;
-                }
-                else{
-                    swap = (lg.getRound() % 2 == 0)? false:true;
-                    if(swap == false){
-                        whiteJackNumber.setText("< "+cwLogic.getVictory());
-                    }
-                    else{
-                        whiteJackNumber.setText("  "+cwLogic.getVictory() + " >");
-                        yPosCard = 50;
-                        botPlay();
-                        cwLogic.checkWin(player1, bot);
-                        checkSomeOneWin();
-                    }
-                    cntZOrder = 1;
-                    btnStand.setEnabled(false);
-                }
-            }
-        });
-
-        btnSurrender.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                cwLogic.reset(player1, bot);        
-                lg.resetRound();
-                whiteJackNumber.setText("< " + cwLogic.getVictory());
-                mainFrame.repaint();
-                reset();
-            }
-            
-        });
-        
+        btnStand.addActionListener(new ActionHandle());
+        btnSurrender.addActionListener(new ActionHandle());
     }
     
     private void draw() {
@@ -214,15 +164,8 @@ public class DemoGUI{
     
     public void reset(){
         checkWin();
-        swap = (lg.getRound() %2 == 0) ? false:true;
-        if(swap == false){
-            whiteJackNumber.setText("< "+cwLogic.getVictory());
-        }
-        else{ 
-            whiteJackNumber.setText("  "+cwLogic.getVictory() + " >");
-        }
-        pressStand = false;
-        swapPlayer = true;
+        // swapPlayer = (lg.getRound() %2 == 0) ? false:true;
+        whiteJackNumber.setText(Integer.toString(cwLogic.getVictory()));
     
         lg.setRound(1);
         cwLogic.setRound(lg.getRound());
@@ -254,7 +197,7 @@ public class DemoGUI{
                 @Override
                 public void run() {
                     cwLogic.reset(player1, bot); 
-                    whiteJackNumber.setText("> " + cwLogic.getVictory() + " <");
+                    whiteJackNumber.setText(Integer.toString(cwLogic.getVictory()));
                     mainFrame.repaint();
                 }    
             },500);
@@ -282,14 +225,12 @@ public class DemoGUI{
         System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
         layer2.add(c.getLabel(),Integer.valueOf(0));  
 
-        cntZOrder++;
+        cntZOrder = 1;
         yPosCard+=50;
 
-        if(swap){
+        if(lg.getRound() %2 == 0){
             botPlay();
-            checkSomeOneWin();
-            pressStand = true;
-            swap = (lg.getRound() % 2 == 0)? false:true;
+            btnStand.setEnabled(false);
             yPosCard = 50;
         }
 
@@ -319,88 +260,52 @@ public class DemoGUI{
 
     void botPlay(){
         while(bot.getSumScore() < cwLogic.getVictory()-9){
-            if(swap){
-                Card c = deck.getCardRand(player1,bot);
+            Card c = deck.getCardRand(player1,bot);
 
-                bot.setListCard(c);
-                bot.setSumScore(c.getRank());
+            bot.setListCard(c);
+            bot.setSumScore(c.getRank());
+            
+            c.getLabel().setLocation(xPosCard, yPosCard);
+            layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
+            
+            yPosCard += 50;
+            
+            System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
 
-                c.getLabel().setLocation(xPosCard, yPosCard);
-
-                yPosCard += 50;
-
-                System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
-                layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-            }
-
-            if(bot.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
-                swapPlayer = false;
-                System.out.println("Stand : "+ swapPlayer);
-                btnStand.setEnabled(true);
-                mainFrame.repaint();
-            }
+        }
+        if(bot.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
+            draw();
         }
     }
-    
     private class ClickListener implements MouseInputListener{
     
         @Override
         public void mouseClicked(MouseEvent e) {
             
-            JLabel jlb = (JLabel)e.getSource();
             // TODO Auto-generated method stub
-            if(jlb == btnDraw.getLabel()){
-                // if(swap){
-                //     Card c = deck.getCardRand(player1,player2);
+            if((JLabel)e.getSource() == btnDraw.getLabel()){
+                Card c = deck.getCardRand(player1,bot);
+                
+                player1.setListCard(c);
+                player1.setSumScore(c.getRank());
+                
+                c.getLabel().setLocation(xPosCard, yPosCard);
+                yPosCard += 50;
+                
+                System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
+                layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
 
-                //     player2.setListCard(c);
-                //     player2.setSumScore(c.getRank());
+                cwLogic.checkWin(player1, bot);
 
-                //     c.getLabel().setLocation(xPosCard, yPosCard);
-
-                //     yPosCard += 50;
-
-                //     System.out.println(c.getRank()+" "+c.getType()+" p2: "+player2.getSumScore());
-                //     layer2.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-
-                //     cwLogic.checkWin(player1, player2);
-
-                //     if(player2.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
-                //         swapPlayer = false;
-                //         System.out.println("Stand : "+ swapPlayer);
-                //         btnStand.setEnabled(true);
-                //         mainFrame.repaint();
-                //     }
-                // }
-                if(!swap){
-                    Card c = deck.getCardRand(player1,bot);
-                    
-                    player1.setListCard(c);
-                    player1.setSumScore(c.getRank());
-                    
-                    c.getLabel().setLocation(xPosCard, yPosCard);
-                    yPosCard += 50;
-                    
-                    System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
-                    
-                    layer1.add(c.getLabel(),Integer.valueOf(cntZOrder++));
-
-                    cwLogic.checkWin(player1, bot);
-
-                    if(bot.getSumScore() == player1.getSumScore() && bot.getListCard().size() > 1){
-                        swapPlayer = false;
-                        System.out.println("Stand : "+ swapPlayer);
-                        btnStand.setEnabled(true);
-                        mainFrame.repaint();
-                    }
+                if(bot.getSumScore() == player1.getSumScore() && bot.getListCard().size() > 1){
+                    btnStand.setEnabled(true);
+                    mainFrame.repaint();
                 }
                 checkSomeOneWin();
-
-                if(!pressStand && (player1.getListCard().size() > 1 || bot.getListCard().size() > 1)){
+                if(lg.getRound() % 2 == 1 && (player1.getListCard().size() > 1)){
                     btnStand.setEnabled(true);
                 }
             }
-
         }
     
         @Override
@@ -442,6 +347,34 @@ public class DemoGUI{
         public void mouseMoved(MouseEvent e) {
             // TODO Auto-generated method stub
         }
-    
     }  
+
+    private class ActionHandle implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+            JButton b = (JButton)e.getSource();
+            if(b == btnStand){
+                if(lg.getRound() % 2 == 0){
+                    draw();
+                    btnStand.setEnabled(false);
+                }
+                else{
+                    yPosCard = 50;
+                    botPlay();
+                    cwLogic.checkWin(player1, bot);
+                    checkSomeOneWin();
+                }
+            }
+            else if(b == btnSurrender){
+                cwLogic.reset(player1, bot);        
+                lg.resetRound();
+                whiteJackNumber.setText(Integer.toString(cwLogic.getVictory()));
+                mainFrame.repaint();
+                reset();
+            }
+        }
+
+    }
 }
