@@ -51,4 +51,5 @@ public class Player {
     public void reset(){
         winCollect = 0;
     }
+
 }

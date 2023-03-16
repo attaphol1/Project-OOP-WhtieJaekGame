@@ -19,9 +19,9 @@ import src.model.DrawCardButton;
 import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
-import src.logic.CheckWinLogic;
+import src.logic.CheckWin1P;
 
-public class DemoGUI{
+public class DemoGUIOnePlayer{
     private LogicGUI lg = new LogicGUI();
 
     private int xPosLy = 10;
@@ -40,7 +40,7 @@ public class DemoGUI{
     private Deck deck;
     private Player player1;
     private Bot bot;
-    private CheckWinLogic cwLogic;
+    private CheckWin1P cwLogic;
     private DrawCardButton btnDraw;
 
     private JLabel mainFrame;
@@ -53,7 +53,7 @@ public class DemoGUI{
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
-    public DemoGUI(){
+    public DemoGUIOnePlayer(){
         initVariable();
         initLayer();
         initButton();
@@ -76,7 +76,7 @@ public class DemoGUI{
         deck = new Deck();
         player1 = new Player();
         bot = new Bot();
-        cwLogic = new CheckWinLogic();
+        cwLogic = new CheckWin1P();
         btnDraw = new DrawCardButton();
 
         drawText = new JLabel("Draw");
@@ -253,7 +253,7 @@ public class DemoGUI{
                 enableBtn();
                 reset();
                 }    
-            },5000);
+            },6000);
             cwLogic.setCheck(false);
         }
     }
@@ -274,10 +274,6 @@ public class DemoGUI{
             System.out.println(c.getRank()+" "+c.getType()+" p2: "+bot.getSumScore());
 
         }
-        if(bot.getSumScore() == player1.getSumScore() && player1.getListCard().size() > 1){
-            bot.showCard(layer2);
-            draw();
-        }
     }
     private class ClickListener implements MouseInputListener{
     
@@ -297,18 +293,17 @@ public class DemoGUI{
                 System.out.println(c.getRank()+" "+c.getType()+" p1: "+player1.getSumScore());
                 layer1.add(c.getLabelFront(),Integer.valueOf(cntZOrder++));
 
-                if(bot.getSumScore() == player1.getSumScore() && bot.getListCard().size() > 1){
-                    btnStand.setEnabled(true);
-                    mainFrame.repaint();
-                }
-                if(lg.getRound() % 2 == 1 && (player1.getListCard().size() > 1)){
-                    btnStand.setEnabled(true);
-                }
-                if(lg.getRound() % 2 == 0){
+                if(lg.getRound() % 2 == 0 || (lg.getRound() % 2 == 1 && (player1.getListCard().size() > 1))){
                     btnStand.setEnabled(true);
                 }
                 if(player1.getSumScore() > cwLogic.getVictory()){
-                    bot.showCard(layer2);
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            bot.showCard(layer2);
+                        }    
+                    },1000);
                     cwLogic.checkWin(player1, bot);
                     checkSomeOneWin();
                 }
@@ -364,7 +359,13 @@ public class DemoGUI{
             JButton b = (JButton)e.getSource();
             if(b == btnStand){
                 if(lg.getRound() % 2 == 0){
-                    bot.showCard(layer2);
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            bot.showCard(layer2);
+                        }    
+                    },1000);
                     if(player1.getSumScore() == bot.getSumScore()){
                         draw();
                     }
@@ -377,11 +378,19 @@ public class DemoGUI{
                 else{
                     yPosCard = 50;
                     botPlay();
-                    bot.showCard(layer2);
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            bot.showCard(layer2);
+                        }    
+                    },1000);
                     if(player1.getSumScore() == bot.getSumScore()){
                         draw();
                     }
-                    cwLogic.checkWin(player1, bot);
+                    else{
+                        cwLogic.checkWin(player1, bot);
+                    }
                     checkSomeOneWin();
                 }
             }
@@ -396,3 +405,4 @@ public class DemoGUI{
 
     }
 }
+
