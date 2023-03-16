@@ -4,10 +4,6 @@ import javax.swing.JLayeredPane;
 
 public class Bot extends Player {
     
-    public void showCard(){
-        
-    }
-
     public void showCard(JLayeredPane layer) {
         layer.removeAll();
         int zOrder = 0;
