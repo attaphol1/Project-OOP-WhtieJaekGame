@@ -32,7 +32,7 @@ public class Card {
         labelBack = new JLabel();
         image = new ImageIcon(new ImageIcon("asset/card/back-card.png").getImage().getScaledInstance(width, height, 1));
         labelBack.setIcon(image);
-        labelBack.setSize(width, height);;
+        labelBack.setSize(width, height);
         
     }
 

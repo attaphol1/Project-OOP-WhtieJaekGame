@@ -1,5 +1,5 @@
 package src;
-import src.GUI.DemoGUI;
+import src.GUI.DemoGUIOnePlayer;
 import src.GUI.GuideGameFrame;
 import src.GUI.StartMenu;
 

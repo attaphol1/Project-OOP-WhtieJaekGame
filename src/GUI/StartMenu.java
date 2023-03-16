@@ -31,8 +31,8 @@ public class StartMenu extends JFrame{
 
     ClickListener cl = new ClickListener();
 
-    DemoGUI demo = new DemoGUI();
-    LoadingFrame loading = new LoadingFrame(5);
+    DemoGUIOnePlayer demoP1 = new DemoGUIOnePlayer();
+    DemoGUITwoPlayer demoP2 = new DemoGUITwoPlayer();
 
     public StartMenu(){
         importIcon();
@@ -43,11 +43,8 @@ public class StartMenu extends JFrame{
 
     void nameGame(){
         nametopic = new JLabel();
-        // nametopic.setText("WhiteJack");
         nametopic.setIcon(nTopic);
         nametopic.setBounds(100, 25, 750, 100);
-        // DefaultFramWin.customFont(nametopic, 125);
-        // nametopic.setForeground(new ColorUIResource(0,0,0));
     }
 
     void btnClick(){
@@ -88,8 +85,8 @@ public class StartMenu extends JFrame{
         mainFrame.setIcon(hiImg);
 
         frame.add(mainFrame);
-        frame.add(demo.getMainFrame());
-        frame.add(loading.getMainFrame());
+        frame.add(demoP1.getMainFrame());
+        frame.add(demoP2.getMainFrame());
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
@@ -131,15 +128,12 @@ public class StartMenu extends JFrame{
                         @Override
                         public void run() {
                             startClick.setIcon(iconStart);
-                            loading.getMainFrame().setVisible(false);
-                            demo.getMainFrame().setVisible(true);
+                            mainFrame.setVisible(false);
+                            demoP1.getMainFrame().setVisible(true);
+                            // demoP2.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
-                    },5000);
-                    
-                    mainFrame.setVisible(false);
-                    loading.getMainFrame().setVisible(true);
-                    loading.start(frame);
+                    },1000);
             }
             else if(sourse == stopClick){
                 stopClick.setIcon(iconStop);
