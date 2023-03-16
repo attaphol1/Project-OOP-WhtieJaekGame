@@ -10,6 +10,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
 import src.WaitingForConnection.DefaultFramWin;
+import src.WaitingForConnection.Playmusic;
 
 import java.awt.*;
 
@@ -33,6 +34,7 @@ public class StartMenu extends JFrame{
 
     DemoGUIOnePlayer demoP1 = new DemoGUIOnePlayer();
     DemoGUITwoPlayer demoP2 = new DemoGUITwoPlayer();
+    Playmusic Sound= new Playmusic();
 
     public StartMenu(){
         importIcon();
@@ -83,6 +85,8 @@ public class StartMenu extends JFrame{
         mainFrame.add(startClick);
         mainFrame.add(nametopic);
         mainFrame.setIcon(hiImg);
+        Sound.Playmusics("asset/sound/soundbackground.wav");
+        
 
         frame.add(mainFrame);
         frame.add(demoP1.getMainFrame());
@@ -129,8 +133,9 @@ public class StartMenu extends JFrame{
                         public void run() {
                             startClick.setIcon(iconStart);
                             mainFrame.setVisible(false);
-                            demoP1.getMainFrame().setVisible(true);
-                            // demoP2.getMainFrame().setVisible(true);
+                            //demoP1.getMainFrame().setVisible(true);
+                            Sound.stopMusic();
+                             demoP2.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
                     },1000);
