@@ -20,6 +20,7 @@ import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
 import src.logic.CheckWin1P;
+import src.WaitingForConnection.Playmusic;
 
 public class DemoGUIOnePlayer{
     private LogicGUI lg = new LogicGUI();
@@ -53,6 +54,7 @@ public class DemoGUIOnePlayer{
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
+    private Playmusic sounddraw=new Playmusic();
     public DemoGUIOnePlayer(){
         initVariable();
         initLayer();
@@ -279,7 +281,8 @@ public class DemoGUIOnePlayer{
     
         @Override
         public void mouseClicked(MouseEvent e) {
-            
+            sounddraw.Playmusics("asset/sound/sounddrawcard.wav");
+
             // TODO Auto-generated method stub
             if((JLabel)e.getSource() == btnDraw.getLabel()){
                 Card c = deck.getCardRand(player1,bot);

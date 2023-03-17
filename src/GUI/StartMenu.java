@@ -20,12 +20,16 @@ public class StartMenu extends JFrame{
 
     JLabel startClick;
     JLabel stopClick;
-    ImageIcon iconStart_Click;
-    ImageIcon iconStart;
+    JLabel p1Click;
+    JLabel p2Click;
     ImageIcon iconStop_Click;
     ImageIcon iconStop;
     ImageIcon hiImg;
     ImageIcon nTopic;
+    ImageIcon iconP1;
+    ImageIcon iconP1_Click;
+    ImageIcon iconP2;
+    ImageIcon iconP2_Click;
     JLabel nametopic;
 
     JFrame frame;
@@ -50,25 +54,32 @@ public class StartMenu extends JFrame{
     }
 
     void btnClick(){
-              
-        startClick = new JLabel();
-        startClick.setIcon(iconStart);
-        startClick.setBounds(362, 300, 275, 115);
-
         stopClick = new JLabel();
         stopClick.setIcon(iconStop);
-        stopClick.setBounds(362, 500, 275, 115);
+        stopClick.setBounds(362, 600, 275, 115);
 
-        startClick.addMouseListener(cl);
+        p1Click=new JLabel();
+        p1Click.setIcon(iconP1);
+        p1Click.setBounds(362, 200, 275, 115);
+
+        p2Click=new JLabel();
+        p2Click.setIcon(iconP2);
+        p2Click.setBounds(362, 400, 275, 115);
 
         stopClick.addMouseListener(cl);
+        
+        p1Click.addMouseListener(cl);
+
+        p2Click.addMouseListener(cl);
     }
 
     void importIcon(){
-        iconStart = new ImageIcon(new ImageIcon("asset/image/Start-Button.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
-        iconStart_Click = new ImageIcon(new ImageIcon("asset/image/Start-Button-Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop = new ImageIcon(new ImageIcon("asset/image/Quit-Button.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop_Click = new ImageIcon(new ImageIcon("asset/image/Quit-Buttom_Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
+        iconP1 = new ImageIcon(new ImageIcon("asset/image/1p.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
+        iconP1_Click = new ImageIcon(new ImageIcon("asset/image/1p-click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
+        iconP2 = new ImageIcon(new ImageIcon("asset/image/2p.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
+        iconP2_Click = new ImageIcon(new ImageIcon("asset/image/2p-click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         nTopic = new ImageIcon(new ImageIcon("asset/image/name-topic.png").getImage().getScaledInstance(750, 110, DO_NOTHING_ON_CLOSE));
         hiImg = new ImageIcon(new ImageIcon("asset/image/king-heart-meme.jpg").getImage().getScaledInstance(1008, 1040, DO_NOTHING_ON_CLOSE));
     }
@@ -82,7 +93,8 @@ public class StartMenu extends JFrame{
         frame.setSize(1000, 800);
         frame.setResizable(false);
         mainFrame.add(stopClick);
-        mainFrame.add(startClick);
+        mainFrame.add(p1Click);
+        mainFrame.add(p2Click);
         mainFrame.add(nametopic);
         mainFrame.setIcon(hiImg);
         // Sound.Playmusics("asset/Sound/soundbackground.wav");
@@ -101,12 +113,13 @@ public class StartMenu extends JFrame{
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
             JLabel sourse = (JLabel)(e.getSource());
-            if(sourse == startClick){
-                System.out.println("Start Game"); 
-            }
-            else if(sourse == stopClick){
+            if(sourse == stopClick){
                 System.out.println("Quit Game");
                 System.exit(0);
+            }else if(sourse == p1Click){
+                System.out.println("1 Player Game");
+            }else if(sourse == p2Click){
+                System.out.println("2 Player Game");
             }
         }
 
@@ -114,11 +127,12 @@ public class StartMenu extends JFrame{
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
             JLabel sourse = (JLabel)(e.getSource());
-            if(sourse == startClick){
-                startClick.setIcon(iconStart_Click);
-            }
-            else if(sourse == stopClick){
+            if(sourse == stopClick){
                 stopClick.setIcon(iconStop_Click);
+            }else if(sourse == p1Click){
+                p1Click.setIcon(iconP1_Click);
+            }else if(sourse == p2Click){
+                p2Click.setIcon(iconP2_Click);
             }
         }
 
@@ -126,16 +140,25 @@ public class StartMenu extends JFrame{
         public void mouseReleased(MouseEvent e) {
             // TODO Auto-generated method stub
             JLabel sourse = (JLabel)(e.getSource());
-            if(sourse == startClick){
+            if(sourse == p1Click){
                 Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            startClick.setIcon(iconStart);
+                            p1Click.setIcon(iconP1);
                             mainFrame.setVisible(false);
                             demoP1.getMainFrame().setVisible(true);
-                            // Sound.stopMusic();
-                            // demoP2.getMainFrame().setVisible(true);
+                            frame.repaint();
+                        }    
+                    },1000);
+            }else if(sourse == p2Click){
+                Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            p2Click.setIcon(iconP2);
+                            mainFrame.setVisible(false);
+                            demoP2.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
                     },1000);
