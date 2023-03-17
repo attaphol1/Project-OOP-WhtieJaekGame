@@ -19,6 +19,7 @@ import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
 import src.logic.CheckWin2P;
+import src.WaitingForConnection.Playmusic;
 
 public class DemoGUITwoPlayer{
     private LogicGUI lg = new LogicGUI();
@@ -56,6 +57,7 @@ public class DemoGUITwoPlayer{
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
+    Playmusic sounddraw= new Playmusic();
     public DemoGUITwoPlayer(){
         initVariable();
         initLayer();
@@ -90,6 +92,7 @@ public class DemoGUITwoPlayer{
         bg.setBounds(0, 0, 1000, 800);
 
         cl = new ClickListener();
+        
     }
 
     void initLayer(){
@@ -299,6 +302,7 @@ public class DemoGUITwoPlayer{
             JLabel jlb = (JLabel)e.getSource();
             // TODO Auto-generated method stub
             if(jlb == btnDraw.getLabel()){
+                sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
                 if(swap){
                     Card c = deck.getCardRand(player1,player2);
 

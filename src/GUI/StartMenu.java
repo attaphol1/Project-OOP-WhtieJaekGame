@@ -10,6 +10,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
 import src.WaitingForConnection.DefaultFramWin;
+import src.WaitingForConnection.Playmusic;
 
 import java.awt.*;
 
@@ -33,6 +34,7 @@ public class StartMenu extends JFrame{
 
     DemoGUIOnePlayer demoP1 = new DemoGUIOnePlayer();
     DemoGUITwoPlayer demoP2 = new DemoGUITwoPlayer();
+    Playmusic Sound= new Playmusic();
 
     public StartMenu(){
         importIcon();
@@ -44,7 +46,7 @@ public class StartMenu extends JFrame{
     void nameGame(){
         nametopic = new JLabel();
         nametopic.setIcon(nTopic);
-        nametopic.setBounds(100, 25, 750, 100);
+        nametopic.setBounds(100, 25, 750, 110);
     }
 
     void btnClick(){
@@ -67,7 +69,7 @@ public class StartMenu extends JFrame{
         iconStart_Click = new ImageIcon(new ImageIcon("asset/image/Start-Button-Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop = new ImageIcon(new ImageIcon("asset/image/Quit-Button.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
         iconStop_Click = new ImageIcon(new ImageIcon("asset/image/Quit-Buttom_Click.png").getImage().getScaledInstance(275, 115, DO_NOTHING_ON_CLOSE));
-        nTopic = new ImageIcon(new ImageIcon("asset/image/Name-Topic.png").getImage().getScaledInstance(750, 100, DO_NOTHING_ON_CLOSE));
+        nTopic = new ImageIcon(new ImageIcon("asset/image/name-topic.png").getImage().getScaledInstance(750, 110, DO_NOTHING_ON_CLOSE));
         hiImg = new ImageIcon(new ImageIcon("asset/image/king-heart-meme.jpg").getImage().getScaledInstance(1008, 1040, DO_NOTHING_ON_CLOSE));
     }
 
@@ -83,10 +85,12 @@ public class StartMenu extends JFrame{
         mainFrame.add(startClick);
         mainFrame.add(nametopic);
         mainFrame.setIcon(hiImg);
+        // Sound.Playmusics("asset/Sound/soundbackground.wav");
+        
 
-        frame.add(mainFrame);
         frame.add(demoP1.getMainFrame());
         frame.add(demoP2.getMainFrame());
+        frame.add(mainFrame);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
@@ -130,6 +134,7 @@ public class StartMenu extends JFrame{
                             startClick.setIcon(iconStart);
                             mainFrame.setVisible(false);
                             demoP1.getMainFrame().setVisible(true);
+                            // Sound.stopMusic();
                             // demoP2.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
