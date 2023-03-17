@@ -53,6 +53,8 @@ public class DemoGUITwoPlayer{
     private JLabel roundText;
     private JLabel whiteJackNumber;
     private JLabel bg;
+    private JLabel sumScoreP1;
+    private JLabel sumScoreP2;
 
     private ImageIcon backgroundGame;
 
@@ -93,6 +95,8 @@ public class DemoGUITwoPlayer{
 
         cl = new ClickListener();
         
+        sumScoreP1 = new JLabel("");
+        sumScoreP2 = new JLabel("");
     }
 
     void initLayer(){
@@ -117,12 +121,23 @@ public class DemoGUITwoPlayer{
         DefaultFramWin.customFont(whiteJackNumber, 100);
         whiteJackNumber.setBounds(325, 20, 800, 100);
         whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
+
+        DefaultFramWin.customFont(sumScoreP1, 80);
+        DefaultFramWin.customFont(sumScoreP2, 80);
+        sumScoreP1.setBounds(25, 600 , 200, 100);
+        sumScoreP2.setBounds(825, 600 , 200, 100);
+        sumScoreP1.setForeground(new ColorUIResource(255,215,0));
+        sumScoreP2.setForeground(new ColorUIResource(255,215,0));
+        sumScoreP1.setVisible(false);
+        sumScoreP2.setVisible(false);
     }
 
     void initFrame(){
         mainFrame.add(roundText);
         mainFrame.add(drawText).setVisible(false);
         mainFrame.add(whiteJackNumber);
+        mainFrame.add(sumScoreP1);
+        mainFrame.add(sumScoreP2);
         mainFrame.add(layer1);
         mainFrame.add(layer2);
         mainFrame.add(btnDraw.getLabel());
@@ -203,13 +218,18 @@ public class DemoGUITwoPlayer{
         btnDraw.getLabel().setVisible(false);
         btnStand.setEnabled(false);
         btnSurrender.setEnabled(false);
-
+        sumScoreP1.setText(Integer.toString(player1.getSumScore()));
+        sumScoreP2.setText(Integer.toString(player2.getSumScore()));
+        sumScoreP1.setVisible(true);
+        sumScoreP2.setVisible(true);
     }
 
     public void enableBtn(){
         btnDraw.getLabel().setVisible(true);
         btnStand.setEnabled(true);
         btnSurrender.setEnabled(true);
+        sumScoreP1.setVisible(false);
+        sumScoreP2.setVisible(false);
     }
     
     public void reset(){

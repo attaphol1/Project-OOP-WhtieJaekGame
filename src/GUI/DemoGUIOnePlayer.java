@@ -57,6 +57,7 @@ public class DemoGUIOnePlayer{
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
+    private Playmusic soundDraw = new Playmusic();
     public DemoGUIOnePlayer(){
         initVariable();
         initLayer();
@@ -75,7 +76,7 @@ public class DemoGUIOnePlayer{
         layer2 = new JLayeredPane();
 
         btnStand = new JButton("Stand");
-        btnSurrender = new JButton("Reset");
+        btnSurrender = new JButton("New Game");
 
         deck = new Deck();
         player1 = new Player();
@@ -117,14 +118,14 @@ public class DemoGUIOnePlayer{
         whiteJackNumber.setBounds(425, 20, 800, 100);
         whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
 
-        DefaultFramWin.customFont(sumScoreP1, 50);
-        DefaultFramWin.customFont(sumScoreP2, 50);
-        sumScoreP1.setBounds(50, 600 , 500, 100);
-        sumScoreP2.setBounds(750, 600 , 500, 100);
-        sumScoreP1.setText("Score");
-        sumScoreP2.setText("Score");
-        sumScoreP1.setForeground(new ColorUIResource(255,250,250));
-        sumScoreP2.setForeground(new ColorUIResource(255,250,250));
+        DefaultFramWin.customFont(sumScoreP1, 80);
+        DefaultFramWin.customFont(sumScoreP2, 80);
+        sumScoreP1.setBounds(25, 600 , 200, 100);
+        sumScoreP2.setBounds(825, 600 , 200, 100);
+        sumScoreP1.setForeground(new ColorUIResource(255,215,0));
+        sumScoreP2.setForeground(new ColorUIResource(255,215,0));
+        sumScoreP1.setVisible(false);
+        sumScoreP2.setVisible(false);
     }
 
     void initFrame(){
@@ -167,17 +168,21 @@ public class DemoGUIOnePlayer{
     }
 
     public void disableBtn(){
-        
         btnDraw.getLabel().setVisible(false);
         btnStand.setEnabled(false);
         btnSurrender.setEnabled(false);
-
+        sumScoreP1.setText(Integer.toString(player1.getSumScore()));
+        sumScoreP2.setText(Integer.toString(bot.getSumScore()));
+        sumScoreP1.setVisible(true);
+        sumScoreP2.setVisible(true);
     }
 
     public void enableBtn(){
         btnDraw.getLabel().setVisible(true);
         btnStand.setEnabled(true);
         btnSurrender.setEnabled(true);
+        sumScoreP1.setVisible(false);
+        sumScoreP2.setVisible(false);
     }
     
     public void reset(){
@@ -195,8 +200,6 @@ public class DemoGUIOnePlayer{
         cntZOrder = 0;
         layer1.removeAll();
         layer2.removeAll();
-        btnSurrender.setLocation(450, 550);
-        btnStand.setEnabled(true);
         
         player1.clearCard();
         player1.resetSumScore();
@@ -277,7 +280,7 @@ public class DemoGUIOnePlayer{
     }
 
     void botPlay(){
-        sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
+        soundDraw.Playmusics(("asset/sound/sounddrawcard.wav"));
         while(bot.getSumScore() < cwLogic.getVictory()-9){
             Card c = deck.getCardRand(player1,bot);
 
@@ -298,11 +301,9 @@ public class DemoGUIOnePlayer{
     
         @Override
         public void mouseClicked(MouseEvent e) {
-            sounddraw.Playmusics("asset/sound/sounddrawcard.wav");
-
             // TODO Auto-generated method stub
             if((JLabel)e.getSource() == btnDraw.getLabel()){
-                sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
+                soundDraw.Playmusics(("asset/sound/sounddrawcard.wav"));
                 Card c = deck.getCardRand(player1,bot);
                 
                 player1.setListCard(c);
