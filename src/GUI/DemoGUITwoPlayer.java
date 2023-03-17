@@ -18,7 +18,6 @@ import src.model.DrawCardButton;
 import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
-import src.logic.CheckWin1P;
 import src.logic.CheckWin2P;
 
 public class DemoGUITwoPlayer{
