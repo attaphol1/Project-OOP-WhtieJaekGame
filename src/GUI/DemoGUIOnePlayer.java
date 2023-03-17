@@ -19,6 +19,7 @@ import src.model.DrawCardButton;
 import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
+import src.WaitingForConnection.Playmusic;
 import src.logic.CheckWin1P;
 
 public class DemoGUIOnePlayer{
@@ -53,6 +54,7 @@ public class DemoGUIOnePlayer{
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
+    Playmusic sounddraw= new Playmusic();
     public DemoGUIOnePlayer(){
         initVariable();
         initLayer();
@@ -259,6 +261,7 @@ public class DemoGUIOnePlayer{
     }
 
     void botPlay(){
+        sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
         while(bot.getSumScore() < cwLogic.getVictory()-9){
             Card c = deck.getCardRand(player1,bot);
 
@@ -282,6 +285,7 @@ public class DemoGUIOnePlayer{
             
             // TODO Auto-generated method stub
             if((JLabel)e.getSource() == btnDraw.getLabel()){
+                sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
                 Card c = deck.getCardRand(player1,bot);
                 
                 player1.setListCard(c);
