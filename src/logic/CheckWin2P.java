@@ -32,7 +32,6 @@ public class CheckWin2P{
                 public void run() {
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
-                    df.statusPlayerOneWin();
                 }    
             },1000);
             check = true;
@@ -44,8 +43,7 @@ public class CheckWin2P{
                 @Override
                 public void run() {
                     p2.setWinCollect();
-                    df.playerTwoWin(p2.getWinCollect());
-                    df.statusPlayerTwoWin();            }    
+                    df.playerTwoWin(p2.getWinCollect());          }    
             },1000);
             check = true;
         }
@@ -55,7 +53,6 @@ public class CheckWin2P{
                 public void run() {
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
-                    df.statusPlayerTwoWin();
                 }    
             },1000);
             check = true;
@@ -66,7 +63,6 @@ public class CheckWin2P{
                 public void run() {
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
-                    df.statusPlayerOneWin();
                 }    
             },1000);
             check = true;
@@ -77,7 +73,6 @@ public class CheckWin2P{
                 public void run() {
                     p2.setWinCollect();
                     df.playerTwoWin(p2.getWinCollect());
-                    df.statusPlayerTwoWin();
                 }    
             },1000);
             check = true;
@@ -89,7 +84,6 @@ public class CheckWin2P{
                 public void run() {
                     p1.setWinCollect();
                     df.playerOneWin(p1.getWinCollect());
-                    df.statusPlayerOneWin();
                 }    
             },1000);
             check = true;
