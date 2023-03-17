@@ -19,6 +19,7 @@ import src.model.DrawCardButton;
 import src.model.LogicGUI;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
+import src.WaitingForConnection.Playmusic;
 import src.logic.CheckWin1P;
 import src.WaitingForConnection.Playmusic;
 
@@ -50,11 +51,12 @@ public class DemoGUIOnePlayer{
     private JLabel roundText;
     private JLabel whiteJackNumber;
     private JLabel bg;
+    private JLabel sumScoreP1;
+    private JLabel sumScoreP2;
 
     private ImageIcon backgroundGame;
 
     private ClickListener cl;
-    private Playmusic sounddraw=new Playmusic();
     public DemoGUIOnePlayer(){
         initVariable();
         initLayer();
@@ -89,6 +91,9 @@ public class DemoGUIOnePlayer{
         bg.setBounds(0, 0, 1000, 800);
 
         cl = new ClickListener();
+
+        sumScoreP1 = new JLabel("");
+        sumScoreP2 = new JLabel("");
     }
 
     void initLayer(){
@@ -111,12 +116,23 @@ public class DemoGUIOnePlayer{
         DefaultFramWin.customFont(whiteJackNumber, 100);
         whiteJackNumber.setBounds(425, 20, 800, 100);
         whiteJackNumber.setForeground(new ColorUIResource(255,250,250));
+
+        DefaultFramWin.customFont(sumScoreP1, 50);
+        DefaultFramWin.customFont(sumScoreP2, 50);
+        sumScoreP1.setBounds(50, 600 , 500, 100);
+        sumScoreP2.setBounds(750, 600 , 500, 100);
+        sumScoreP1.setText("Score");
+        sumScoreP2.setText("Score");
+        sumScoreP1.setForeground(new ColorUIResource(255,250,250));
+        sumScoreP2.setForeground(new ColorUIResource(255,250,250));
     }
 
     void initFrame(){
         mainFrame.add(roundText);
         mainFrame.add(drawText).setVisible(false);
         mainFrame.add(whiteJackNumber);
+        mainFrame.add(sumScoreP1);
+        mainFrame.add(sumScoreP2);
         mainFrame.add(layer1);
         mainFrame.add(layer2);
         mainFrame.add(btnDraw.getLabel());
@@ -261,6 +277,7 @@ public class DemoGUIOnePlayer{
     }
 
     void botPlay(){
+        sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
         while(bot.getSumScore() < cwLogic.getVictory()-9){
             Card c = deck.getCardRand(player1,bot);
 
@@ -285,6 +302,7 @@ public class DemoGUIOnePlayer{
 
             // TODO Auto-generated method stub
             if((JLabel)e.getSource() == btnDraw.getLabel()){
+                sounddraw.Playmusics(("asset/sound/sounddrawcard.wav"));
                 Card c = deck.getCardRand(player1,bot);
                 
                 player1.setListCard(c);
