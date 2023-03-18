@@ -164,7 +164,7 @@ public class DefaultFramWin {
 
     public static void customFont(JLabel label, float size){
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("asset/Font/SFPixelateShaded.ttf")).deriveFont(size);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("asset/font/SFPixelateShaded.ttf")).deriveFont(size);
             font.deriveFont(Font.PLAIN);
             label.setFont(font);
         } catch (FontFormatException e) {

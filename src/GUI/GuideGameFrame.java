@@ -12,7 +12,7 @@ public class GuideGameFrame {
         frameGuide();
     }
     void setText(){
-        frame = new JFrame("Guide Game");
+        frame = new JFrame("How to play");
         welcome = new JLabel("<html><pre> __          __  _                            _         __          ___     _ _       _            _    <br>"+
                                         " \\ \\        / / | |                          | |        \\ \\        / / |   (_) |     (_)          | |   <br>"+
                                         "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___  | |_ ___    \\ \\  /\\  / /| |__  _| |_ ___ _  __ _  ___| | __<br>"+
@@ -46,7 +46,6 @@ public class GuideGameFrame {
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setTitle("Rule");
         frame.setLocationRelativeTo(null);
     }
 }
