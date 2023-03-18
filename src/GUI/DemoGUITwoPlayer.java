@@ -78,7 +78,7 @@ public class DemoGUITwoPlayer{
         layer2 = new JLayeredPane();
 
         btnStand = new JButton("Stand");
-        btnSurrender = new JButton("Reset");
+        btnSurrender = new JButton("New Game");
 
         deck = new Deck();
         player1 = new Player();
@@ -274,7 +274,7 @@ public class DemoGUITwoPlayer{
                 @Override
                 public void run() {
                     cwLogic.reset(player1, player2); 
-                    whiteJackNumber.setText("> " + cwLogic.getVictory() + " <");
+                    whiteJackNumber.setText("< " + cwLogic.getVictory());
                     mainFrame.repaint();
                 }    
             },500);
