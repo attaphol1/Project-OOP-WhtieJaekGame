@@ -135,6 +135,7 @@ public class StartMenu extends JFrame{
         @Override
         public void mouseReleased(MouseEvent e) {
             // TODO Auto-generated method stub
+            Sound.stopMusic();
             JLabel sourse = (JLabel)(e.getSource());
             if(sourse == p1Click){
                 Timer timer = new Timer();
