@@ -15,14 +15,14 @@ import javax.swing.plaf.ColorUIResource;
 import src.model.Card;
 import src.model.Deck;
 import src.model.DrawCardButton;
-import src.model.LogicGUI;
+import src.model.Round;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
 import src.logic.CheckWin2P;
 import src.WaitingForConnection.Playmusic;
 
 public class DemoGUITwoPlayer{
-    private LogicGUI lg = new LogicGUI();
+    private Round lg = new Round();
 
     private int xPosLy;
     private int yPosLy;

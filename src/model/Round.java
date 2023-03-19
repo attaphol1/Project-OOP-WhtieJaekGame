@@ -1,9 +1,9 @@
 package src.model;
 
-public class LogicGUI {
+public class Round {
     private int round;
 
-     public LogicGUI(){
+     public Round(){
         round = 1;
     }
 

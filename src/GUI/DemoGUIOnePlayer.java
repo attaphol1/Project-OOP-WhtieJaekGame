@@ -16,14 +16,14 @@ import src.model.Bot;
 import src.model.Card;
 import src.model.Deck;
 import src.model.DrawCardButton;
-import src.model.LogicGUI;
+import src.model.Round;
 import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
 import src.WaitingForConnection.Playmusic;
 import src.logic.CheckWin1P;
 
 public class DemoGUIOnePlayer{
-    private LogicGUI lg = new LogicGUI();
+    private Round lg = new Round();
 
     private int xPosLy = 10;
     private int yPosLy = 10;
