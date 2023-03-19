@@ -151,6 +151,7 @@ public class DemoGUITwoPlayer{
         btnDraw.getLabel().setLocation(375,300);
         btnStand.setBounds(450, 500, 100, 40);
         btnSurrender.setBounds(450, 550, 100, 40);
+        btnSurrender.setFocusable(false);
     }
 
     void initLogic(){

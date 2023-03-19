@@ -9,7 +9,6 @@ import src.WaitingForConnection.DefaultFramWin;
 import src.model.Player;
 
 public class CheckWin1P{
-    private int round = 1;
     private int victory;
     private boolean check = false;
 
@@ -92,10 +91,6 @@ public class CheckWin1P{
         p1.reset();
         p2.reset();
         df.resetWinGame();
-    }
-    
-    public void setRound(int r){
-        round = r;
     }
 
     public int getVictory() {

@@ -146,6 +146,7 @@ public class DemoGUIOnePlayer{
         btnDraw.getLabel().setLocation(375,300);
         btnStand.setBounds(450, 500, 100, 40);
         btnSurrender.setBounds(450, 550, 100, 40);
+        btnSurrender.setFocusable(false);
         btnDraw.getLabel().addMouseListener(cl);
         btnStand.addActionListener(new ActionHandle());
         btnSurrender.addActionListener(new ActionHandle());
@@ -189,7 +190,6 @@ public class DemoGUIOnePlayer{
         whiteJackNumber.setText(Integer.toString(cwLogic.getVictory()));
     
         lg.setRound(1);
-        cwLogic.setRound(lg.getRound());
         System.out.println("round "+lg.getRound());
         roundText.setText("ROUND " + lg.getRound());
 
