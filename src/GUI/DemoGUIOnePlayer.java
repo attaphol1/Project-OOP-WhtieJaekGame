@@ -280,7 +280,7 @@ public class DemoGUIOnePlayer{
 
     void botPlay(){
         soundDraw.Playmusics(("asset/sound/sounddrawcard.wav"));
-        while(bot.getSumScore() < cwLogic.getVictory()-9){
+        while(bot.getSumScore() < cwLogic.getVictory()-7){
             Card c = deck.getCardRand(player1,bot);
 
             bot.setListCard(c);
