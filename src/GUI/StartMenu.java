@@ -93,7 +93,7 @@ public class StartMenu extends JFrame{
         mainFrame.add(p2Click);
         mainFrame.add(nametopic);
         mainFrame.setIcon(hiImg);
-        // Sound.Playmusics("asset/Sound/soundbackground.wav");
+        Sound.Playmusics("asset/Sound/soundBG.wav");
         
 
         frame.add(demoP1.getMainFrame());
