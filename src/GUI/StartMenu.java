@@ -7,12 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.ColorUIResource;
 
-import src.WaitingForConnection.DefaultFramWin;
 import src.WaitingForConnection.Playmusic;
-
-import java.awt.*;
 
 
 public class StartMenu extends JFrame{

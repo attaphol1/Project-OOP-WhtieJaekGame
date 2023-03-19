@@ -21,7 +21,6 @@ import src.model.Player;
 import src.WaitingForConnection.DefaultFramWin;
 import src.WaitingForConnection.Playmusic;
 import src.logic.CheckWin1P;
-import src.WaitingForConnection.Playmusic;
 
 public class DemoGUIOnePlayer{
     private LogicGUI lg = new LogicGUI();
