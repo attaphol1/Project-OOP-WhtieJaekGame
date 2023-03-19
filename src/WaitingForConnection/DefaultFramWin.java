@@ -40,6 +40,8 @@ public class DefaultFramWin {
 
     private  Timer timer1;
 
+    private Playmusic kunPee = new Playmusic();
+
     public DefaultFramWin(){
         newImage();
         
@@ -90,6 +92,7 @@ public class DefaultFramWin {
     }
 
     public void playerOneWin(int points) {     
+        kunPee.Playmusics("asset/sound/kunPeYuJangWatRiKa.wav");
         winText.setText("Player 1 WIN!!!");
         winText.setBounds(240, 0, 600, 100);
         frame.setVisible(true);
@@ -117,6 +120,7 @@ public class DefaultFramWin {
     }
 
     public void playerTwoWin(int points) {
+        kunPee.Playmusics("asset/sound/kunPeYuJangWatRiKa.wav");
         winText.setText("Player 2 WIN!!!");
         winText.setBounds(240, 0, 600, 100);
         frame.setVisible(true);
