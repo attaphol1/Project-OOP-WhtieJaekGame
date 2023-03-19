@@ -12,6 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
+import src.model.BackButton;
 import src.model.Bot;
 import src.model.Card;
 import src.model.Deck;
@@ -43,6 +44,7 @@ public class DemoGUIOnePlayer{
     private Bot bot;
     private CheckWin1P cwLogic;
     private DrawCardButton btnDraw;
+    private BackButton btnBack;
 
     private JLabel mainFrame;
 
@@ -82,6 +84,7 @@ public class DemoGUIOnePlayer{
         bot = new Bot();
         cwLogic = new CheckWin1P();
         btnDraw = new DrawCardButton();
+        btnBack = new BackButton();
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
@@ -136,6 +139,7 @@ public class DemoGUIOnePlayer{
         mainFrame.add(layer1);
         mainFrame.add(layer2);
         mainFrame.add(btnDraw.getLabel());
+        mainFrame.add(btnBack.getLabel());
         mainFrame.add(btnStand);
         mainFrame.add(btnSurrender);
         mainFrame.setIcon(backgroundGame);
@@ -149,6 +153,7 @@ public class DemoGUIOnePlayer{
         btnSurrender.setBounds(450, 550, 100, 40);
         btnSurrender.setFocusable(false);
         btnDraw.getLabel().addMouseListener(cl);
+        btnBack.getLabel().addMouseListener(cl);
         btnStand.addActionListener(new ActionHandle());
         btnSurrender.addActionListener(new ActionHandle());
     }
@@ -330,6 +335,9 @@ public class DemoGUIOnePlayer{
                     checkSomeOneWin();
                 }
             }
+            if((JLabel)e.getSource() == btnBack.getLabel()){
+                mainFrame.setVisible(false);
+            }
         }
     
         @Override
@@ -350,6 +358,10 @@ public class DemoGUIOnePlayer{
                 btnDraw.setBorder();
                 mainFrame.repaint();
             }
+            if(jlb == btnBack.getLabel()){
+                btnBack.setImgYellow();
+                mainFrame.repaint();
+            }
         }
     
         @Override
@@ -358,6 +370,10 @@ public class DemoGUIOnePlayer{
             JLabel jlb = (JLabel)e.getSource();
             if(jlb == btnDraw.getLabel()){
                 btnDraw.removeBorder();
+                mainFrame.repaint();
+            }
+            if(jlb == btnBack.getLabel()){
+                btnBack.setImgBlack();
                 mainFrame.repaint();
             }
         }

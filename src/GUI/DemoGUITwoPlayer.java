@@ -12,6 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 
+import src.model.BackButton;
 import src.model.Card;
 import src.model.Deck;
 import src.model.DrawCardButton;
@@ -46,6 +47,7 @@ public class DemoGUITwoPlayer{
     private Player player2;
     private CheckWin2P cwLogic;
     private DrawCardButton btnDraw;
+    private BackButton btnBack;
 
     private JLabel mainFrame;
 
@@ -85,6 +87,7 @@ public class DemoGUITwoPlayer{
         player2 = new Player();
         cwLogic = new CheckWin2P();
         btnDraw = new DrawCardButton();
+        btnBack = new BackButton();
 
         drawText = new JLabel("Draw");
         roundText = new JLabel("ROUND " + lg.getRound());
@@ -141,6 +144,7 @@ public class DemoGUITwoPlayer{
         mainFrame.add(layer1);
         mainFrame.add(layer2);
         mainFrame.add(btnDraw.getLabel());
+        mainFrame.add(btnBack.getLabel());
         mainFrame.add(btnStand);
         mainFrame.add(btnSurrender);
         mainFrame.setIcon(backgroundGame);
@@ -158,6 +162,7 @@ public class DemoGUITwoPlayer{
     void initLogic(){
 
         btnDraw.getLabel().addMouseListener(cl);
+        btnBack.getLabel().addMouseListener(cl);
         btnStand.addActionListener(new ActionListener(){
 
             @Override
@@ -386,7 +391,9 @@ public class DemoGUITwoPlayer{
                     btnStand.setEnabled(true);
                 }
             }
-
+            if((JLabel)e.getSource() == btnBack.getLabel()){
+                mainFrame.setVisible(false);
+            }
         }
     
         @Override
@@ -407,6 +414,10 @@ public class DemoGUITwoPlayer{
                 btnDraw.setBorder();
                 mainFrame.repaint();
             }
+            if(jlb == btnBack.getLabel()){
+                btnBack.setImgYellow();
+                mainFrame.repaint();
+            }
         }
     
         @Override
@@ -415,6 +426,10 @@ public class DemoGUITwoPlayer{
             JLabel jlb = (JLabel)e.getSource();
             if(jlb == btnDraw.getLabel()){
                 btnDraw.removeBorder();
+                mainFrame.repaint();
+            }
+            if(jlb == btnBack.getLabel()){
+                btnBack.setImgBlack();
                 mainFrame.repaint();
             }
         }

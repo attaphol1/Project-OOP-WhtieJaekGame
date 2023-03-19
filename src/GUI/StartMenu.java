@@ -143,7 +143,7 @@ public class StartMenu extends JFrame{
                         @Override
                         public void run() {
                             p1Click.setIcon(iconP1);
-                            mainFrame.setVisible(false);
+                            // mainFrame.setVisible(false);
                             demoP1.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
@@ -154,7 +154,7 @@ public class StartMenu extends JFrame{
                         @Override
                         public void run() {
                             p2Click.setIcon(iconP2);
-                            mainFrame.setVisible(false);
+                            // mainFrame.setVisible(false);
                             demoP2.getMainFrame().setVisible(true);
                             frame.repaint();
                         }    
