@@ -145,6 +145,7 @@ public class DemoGUIOnePlayer{
     void initButton(){
         btnDraw.getLabel().setLocation(375,300);
         btnStand.setBounds(450, 500, 100, 40);
+        btnStand.setFocusable(false);
         btnSurrender.setBounds(450, 550, 100, 40);
         btnSurrender.setFocusable(false);
         btnDraw.getLabel().addMouseListener(cl);
